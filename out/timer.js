@@ -26,16 +26,24 @@
     }).bind(window);
 
     Timer.prototype.step = function() {
+      this.updateDelta();
       this.trigger('step');
       return this.request(this.step);
     };
 
-    Timer.prototype.getDelta = function() {
-      var dt, now;
+    Timer.prototype.updateDelta = function() {
+      var now;
       now = this.getMicroTime();
-      dt = now - this.last;
-      this.last = now;
-      return dt;
+      this.dt = now - this.last;
+      return this.last = now;
+    };
+
+    Timer.prototype.getDelta = function() {
+      return this.dt;
+    };
+
+    Timer.prototype.getFps = function() {
+      return 1 / this.getDelta();
     };
 
     Timer.prototype.getMicroTime = function() {

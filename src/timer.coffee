@@ -19,14 +19,20 @@ class Timer extends Base
 		).bind window
 	
 	step: =>
+		@updateDelta()
 		@trigger 'step'
 		@request @step
+
+	updateDelta: ->
+		now = @getMicroTime()
+		@dt = now - @last
+		@last = now
 	
 	getDelta: ->
-		now = @getMicroTime()
-		dt = now - @last
-		@last = now
-		dt
+		@dt
+	
+	getFps: ->
+		1 / @getDelta()
 	
 	getMicroTime: ->
 		+new Date / 1000
