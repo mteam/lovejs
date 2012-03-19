@@ -14,7 +14,7 @@
 
     Keyboard.include(Events);
 
-    define('love/keyboard', Keyboard);
+    Keyboard.define('love/keyboard');
 
     function Keyboard() {
       this.keyUp = __bind(this.keyUp, this);

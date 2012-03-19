@@ -3,8 +3,7 @@ Events = require 'love/events'
 
 class Keyboard extends Base
 	@include Events
-
-	define 'love/keyboard', this
+	@define 'love/keyboard'
 
 	constructor: ->
 		window.addEventListener 'keydown', @keyDown

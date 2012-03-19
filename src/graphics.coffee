@@ -7,7 +7,7 @@ rgb = rgba = (r, g, b, a) ->
 		"rgb(#{r}, #{g}, #{b})"
 
 class Graphics
-	define 'love/graphics', this
+	@define 'love/graphics'
 
 	constructor: ({element: canvas}) ->
 		@canvas = canvas[0]
@@ -86,14 +86,14 @@ class Graphics
 
 
 class Drawable
-	define 'love/graphics/drawable', this
+	@define 'love/graphics/drawable'
 
 	draw: (ctx, x, y) ->
 
 
 
 class Image extends Drawable
-	define 'love/graphics/image', this
+	@define 'love/graphics/image'
 
 	constructor: (image) ->
 		if image instanceof Asset

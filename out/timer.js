@@ -14,7 +14,7 @@
 
     Timer.include(Events);
 
-    define('love/timer', Timer);
+    Timer.define('love/timer');
 
     function Timer() {
       this.step = __bind(this.step, this);      this.last = this.getMicroTime();

@@ -3,8 +3,7 @@ Events = require 'love/events'
 
 class Assets extends Base
 	@include Events
-
-	define 'love/assets', this
+	@define 'love/assets'
 
 	constructor: ->
 		@_expected = 0

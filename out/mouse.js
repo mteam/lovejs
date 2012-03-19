@@ -14,7 +14,7 @@
 
     Mouse.include(Events);
 
-    define('love/mouse', Mouse);
+    Mouse.define('love/mouse');
 
     function Mouse(_arg) {
       this.element = _arg.element;

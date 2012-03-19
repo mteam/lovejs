@@ -3,8 +3,7 @@ Events = require 'love/events'
 
 class Timer extends Base
 	@include Events
-
-	define 'love/timer', this
+	@define 'love/timer'
 	
 	constructor: ->
 		@last = @getMicroTime()

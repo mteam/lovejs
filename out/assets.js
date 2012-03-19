@@ -14,7 +14,7 @@
 
     Assets.include(Events);
 
-    define('love/assets', Assets);
+    Assets.define('love/assets');
 
     function Assets() {
       this.done = __bind(this.done, this);      this._expected = 0;

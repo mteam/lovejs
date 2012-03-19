@@ -1,5 +1,5 @@
 class Base
-	define 'love/base', this
+	@define 'love/base'
 
 	@include: (object) ->
 		for own key, value of object

@@ -4,7 +4,7 @@
 
   Love = (function() {
 
-    define('love', Love);
+    Love.define('love');
 
     function Love() {
       this.step = __bind(this.step, this);      this.modules = {

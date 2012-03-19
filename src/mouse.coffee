@@ -3,8 +3,7 @@ Events = require 'love/events'
 
 class Mouse extends Base
 	@include Events
-
-	define 'love/mouse', this
+	@define 'love/mouse'
 
 	constructor: ({@element}) ->
 		@element.bind 'mousemove mousedown mouseup', @updatePosition

@@ -1,5 +1,5 @@
 class Love
-	define 'love', this
+	@define 'love'
 
 	constructor: ->
 		@modules =

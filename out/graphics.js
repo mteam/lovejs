@@ -15,7 +15,7 @@
 
   Graphics = (function() {
 
-    define('love/graphics', Graphics);
+    Graphics.define('love/graphics');
 
     function Graphics(_arg) {
       var canvas;
@@ -127,7 +127,7 @@
 
     function Drawable() {}
 
-    define('love/graphics/drawable', Drawable);
+    Drawable.define('love/graphics/drawable');
 
     Drawable.prototype.draw = function(ctx, x, y) {};
 
@@ -139,7 +139,7 @@
 
     __extends(Image, _super);
 
-    define('love/graphics/image', Image);
+    Image.define('love/graphics/image');
 
     function Image(image) {
       if (image instanceof Asset) image = image.getContent();

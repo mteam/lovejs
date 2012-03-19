@@ -7,7 +7,7 @@
 
     function Base() {}
 
-    define('love/base', Base);
+    Base.define('love/base');
 
     Base.include = function(object) {
       var key, value;

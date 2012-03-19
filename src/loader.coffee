@@ -1,7 +1,13 @@
 map = {}
 
-@define = (name, value) ->
+define = (name, value) ->
 	map[name] = value
 
-@require = (name) ->
+require = (name) ->
 	map[name]
+
+Function::define = (name) ->
+	define name, this
+
+@define = define
+@require = require
