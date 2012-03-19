@@ -1,9 +1,17 @@
 (function() {
-  var Asset, Drawable, Graphics, Image,
+  var Asset, Drawable, Graphics, Image, rgb, rgba,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   Asset = require('love/assets/asset');
+
+  rgb = rgba = function(r, g, b, a) {
+    if (a != null) {
+      return "rgba(" + r + ", " + g + ", " + b + ", " + (a / 255) + ")";
+    } else {
+      return "rgb(" + r + ", " + g + ", " + b + ")";
+    }
+  };
 
   Graphics = (function() {
 
@@ -23,7 +31,7 @@
     };
 
     Graphics.prototype.setBackgroundColor = function(r, g, b) {
-      return this.canvas.style.background = "rgb(" + r + ", " + g + ", " + b + ")";
+      return this.canvas.style.background = rgb(r, g, b);
     };
 
     Graphics.prototype.setLineWidth = function(width) {
@@ -36,6 +44,19 @@
 
     Graphics.prototype.setLineJoin = function(join) {
       return this.ctx.lineJoin = join;
+    };
+
+    Graphics.prototype.setColor = function(r, g, b, a, type) {
+      var str;
+      if ((r != null) && (g != null) && (b != null)) {
+        str = rgb(r, g, b);
+        if (type != null) {
+          this.ctx["" + type + "Style"] = str;
+        } else {
+          this.ctx.fillStyle = this.ctx.strokeStyle = str;
+        }
+      }
+      if (a != null) return this.ctx.globalAlpha = a / 255;
     };
 
     Graphics.prototype.rectangle = function(mode, x, y, width, height) {

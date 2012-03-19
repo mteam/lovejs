@@ -1,5 +1,11 @@
 Asset = require 'love/assets/asset'
 
+rgb = rgba = (r, g, b, a) ->
+	if a?
+		"rgba(#{r}, #{g}, #{b}, #{a / 255})"
+	else
+		"rgb(#{r}, #{g}, #{b})"
+
 class Graphics
 	define 'love/graphics', this
 
@@ -13,7 +19,7 @@ class Graphics
 		@ctx.clearRect 0, 0, @width, @height
 
 	setBackgroundColor: (r, g, b) ->
-		@canvas.style.background = "rgb(#{r}, #{g}, #{b})"
+		@canvas.style.background = rgb r, g, b
 	
 	setLineWidth: (width) ->
 		@ctx.lineWidth = width
@@ -23,6 +29,16 @@ class Graphics
 	
 	setLineJoin: (join) ->
 		@ctx.lineJoin = join
+	
+	setColor: (r, g, b, a, type) ->
+		if r? and g? and b?
+			str = rgb r, g, b
+			if type?
+				@ctx["#{type}Style"] = str
+			else
+				@ctx.fillStyle = @ctx.strokeStyle = str
+		
+		if a? then @ctx.globalAlpha = a / 255
 
 	rectangle: (mode, x, y, width, height) ->
 		func = switch mode

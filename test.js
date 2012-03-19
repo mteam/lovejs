@@ -18,7 +18,7 @@ love.load = function () {
 	}
 
 	love.graphics.setBackgroundColor(0xff, 0xf1, 0xf7);
-	love.graphics.ctx.globalAlpha = 200 / 255;
+	love.graphics.setColor(null, null, null, 200);
 };
 
 love.update = function (dt) {
