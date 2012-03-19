@@ -26,6 +26,18 @@
       return this.canvas.style.background = "rgb(" + r + ", " + g + ", " + b + ")";
     };
 
+    Graphics.prototype.setLineWidth = function(width) {
+      return this.ctx.lineWidth = width;
+    };
+
+    Graphics.prototype.setLineCap = function(cap) {
+      return this.ctx.lineCap = cap;
+    };
+
+    Graphics.prototype.setLineJoin = function(join) {
+      return this.ctx.lineJoin = join;
+    };
+
     Graphics.prototype.rectangle = function(mode, x, y, width, height) {
       var func;
       func = (function() {
@@ -48,6 +60,17 @@
         case "line":
           return this.ctx.stroke();
       }
+    };
+
+    Graphics.prototype.line = function() {
+      var i, x, y, _len, _step;
+      this.ctx.beginPath();
+      for (i = 0, _len = arguments.length, _step = 2; i < _len; i += _step) {
+        x = arguments[i];
+        y = arguments[i + 1];
+        this.ctx.lineTo(x, y);
+      }
+      return this.ctx.stroke();
     };
 
     Graphics.prototype.draw = function(drawable, x, y, r, sx, sy, ox, oy) {

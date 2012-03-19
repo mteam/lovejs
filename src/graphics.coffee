@@ -14,6 +14,15 @@ class Graphics
 
 	setBackgroundColor: (r, g, b) ->
 		@canvas.style.background = "rgb(#{r}, #{g}, #{b})"
+	
+	setLineWidth: (width) ->
+		@ctx.lineWidth = width
+	
+	setLineCap: (cap) ->
+		@ctx.lineCap = cap
+	
+	setLineJoin: (join) ->
+		@ctx.lineJoin = join
 
 	rectangle: (mode, x, y, width, height) ->
 		func = switch mode
@@ -28,6 +37,13 @@ class Graphics
 		switch mode
 			when "fill" then @ctx.fill()
 			when "line" then @ctx.stroke()
+
+	line: ->
+		@ctx.beginPath()
+		for x, i in arguments by 2
+			y = arguments[i + 1]
+			@ctx.lineTo x, y
+		@ctx.stroke()
 
 	draw: (drawable, x, y, r = 0, sx = 1, sy = sx, ox = 0, oy = 0) ->
 		if r is 0 and sx is 1 and sy is sx
