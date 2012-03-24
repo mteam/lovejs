@@ -56,7 +56,9 @@
     Love.prototype.step = function() {
       if (typeof this.update === "function") this.update(this.timer.getDelta());
       this.graphics.clear();
-      return typeof this.draw === "function" ? this.draw() : void 0;
+      this.graphics.push();
+      if (typeof this.draw === "function") this.draw();
+      return this.graphics.pop();
     };
 
     return Love;

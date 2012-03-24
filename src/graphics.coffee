@@ -15,8 +15,14 @@ class Graphics
 		@height = @canvas.height
 		@ctx = @canvas.getContext '2d'
 
-	clear: ->
-		@ctx.clearRect 0, 0, @width, @height
+	clear: -> @ctx.clearRect 0, 0, @width, @height
+
+	push: -> @ctx.save()
+	pop: -> @ctx.restore()
+
+	scale: (x, y) -> @ctx.scale x, y
+	rotate: (angle) -> @ctx.rotate angle
+	translate: (x, y) -> @ctx.translate x, y
 
 	setBackgroundColor: (r, g, b, a = 255) ->
 		if _.isArray r
@@ -24,14 +30,9 @@ class Graphics
 		else
 			@canvas.style.background = rgba r, g, b, a
 	
-	setLineWidth: (width) ->
-		@ctx.lineWidth = width
-	
-	setLineCap: (cap) ->
-		@ctx.lineCap = cap
-	
-	setLineJoin: (join) ->
-		@ctx.lineJoin = join
+	setLineWidth: (width) -> @ctx.lineWidth = width
+	setLineCap: (cap) -> @ctx.lineCap = cap
+	setLineJoin: (join) -> @ctx.lineJoin = join
 	
 	setColor: (r, g, b, a, type) ->
 		if r? and g? and b?
@@ -42,6 +43,8 @@ class Graphics
 				@ctx.fillStyle = @ctx.strokeStyle = str
 		
 		if a? then @ctx.globalAlpha = a / 255
+
+	# shapes
 
 	rectangle: (mode, x, y, width, height) ->
 		func = switch mode
@@ -64,22 +67,24 @@ class Graphics
 			@ctx.lineTo x, y
 		@ctx.stroke()
 
+	# objects drawing
+
 	draw: (drawable, x, y, r = 0, sx = 1, sy = sx, ox = 0, oy = 0) ->
 		if r is 0 and sx is 1 and sy is sx
 			x = x - ox
 			y = y - oy
 			drawable.draw @ctx, x, y
 		else
-			@ctx.save()
+			@push()
 
-			@ctx.translate x, y
-			@ctx.rotate r
-			@ctx.translate -ox, -oy
-			@ctx.scale sx, sy
+			@translate x, y
+			@rotate r
+			@translate -ox, -oy
+			@scale sx, sy
 
 			drawable.draw @ctx, 0, 0
 
-			@ctx.restore()
+			@pop()
 
 	# factories
 

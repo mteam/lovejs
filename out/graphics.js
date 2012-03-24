@@ -30,6 +30,26 @@
       return this.ctx.clearRect(0, 0, this.width, this.height);
     };
 
+    Graphics.prototype.push = function() {
+      return this.ctx.save();
+    };
+
+    Graphics.prototype.pop = function() {
+      return this.ctx.restore();
+    };
+
+    Graphics.prototype.scale = function(x, y) {
+      return this.ctx.scale(x, y);
+    };
+
+    Graphics.prototype.rotate = function(angle) {
+      return this.ctx.rotate(angle);
+    };
+
+    Graphics.prototype.translate = function(x, y) {
+      return this.ctx.translate(x, y);
+    };
+
     Graphics.prototype.setBackgroundColor = function(r, g, b, a) {
       if (a == null) a = 255;
       if (_.isArray(r)) {
@@ -110,13 +130,13 @@
         y = y - oy;
         return drawable.draw(this.ctx, x, y);
       } else {
-        this.ctx.save();
-        this.ctx.translate(x, y);
-        this.ctx.rotate(r);
-        this.ctx.translate(-ox, -oy);
-        this.ctx.scale(sx, sy);
+        this.push();
+        this.translate(x, y);
+        this.rotate(r);
+        this.translate(-ox, -oy);
+        this.scale(sx, sy);
         drawable.draw(this.ctx, 0, 0);
-        return this.ctx.restore();
+        return this.pop();
       }
     };
 

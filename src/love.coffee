@@ -37,7 +37,10 @@ class Love
 		@update? @timer.getDelta()
 
 		@graphics.clear()
+
+		@graphics.push()
 		@draw?()
+		@graphics.pop()
 
 
 
