@@ -12,7 +12,7 @@ love.load = function () {
 	var file, asset, image;
 	for (name in images) {
 		file = images[name];
-		asset = love.assets.newImage('files/' + file);
+		asset = love.assets.newImage(file);
 		image = love.graphics.newImage(asset);
 		images[name] = image;
 	}
