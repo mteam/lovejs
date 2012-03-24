@@ -1,5 +1,5 @@
 (function() {
-  var Asset, Drawable, Graphics, Image, rgb, rgba,
+  var Asset, Drawable, Graphics, Image, Quad, rgb, rgba,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -140,8 +140,33 @@
       }
     };
 
+    Graphics.prototype.drawq = function(image, quad, x, y, r, sx, sy, ox, oy) {
+      if (r == null) r = 0;
+      if (sx == null) sx = 1;
+      if (sy == null) sy = sx;
+      if (ox == null) ox = 0;
+      if (oy == null) oy = 0;
+      if (r === 0 && sx === 1 && sy === sx) {
+        x = x - ox;
+        y = y - oy;
+        return image.drawQuad(this.ctx, quad, x, y);
+      } else {
+        this.push();
+        this.translate(x, y);
+        this.rotate(r);
+        this.translate(-ox, -oy);
+        this.scale(sx, sy);
+        image.drawQuad(this.ctx, quad, 0, 0);
+        return this.pop();
+      }
+    };
+
     Graphics.prototype.newImage = function(image) {
       return new Image(image);
+    };
+
+    Graphics.prototype.newQuad = function(x, y, width, height) {
+      return new Quad(x, y, width, height);
     };
 
     return Graphics;
@@ -175,8 +200,44 @@
       return ctx.drawImage(this.image, x, y);
     };
 
+    Image.prototype.drawQuad = function(ctx, quad, x, y) {
+      return ctx.drawImage(this.image, quad.x, quad.y, quad.width, quad.height, x, y, quad.width, quad.height);
+    };
+
     return Image;
 
   })(Drawable);
+
+  Quad = (function() {
+
+    Quad.define('love/graphics/quad');
+
+    function Quad(x, y, width, height) {
+      this.setViewport(x, y, width, height);
+    }
+
+    Quad.prototype.setViewport = function(x, y, width, height) {
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+    };
+
+    Quad.prototype.getViewport = function() {
+      return [this.x, this.y, this.width, this.height];
+    };
+
+    Quad.prototype.flip = function(x, y) {
+      if ((x && this.width > 0) || (!x && this.width < 0)) {
+        this.width = -this.width;
+      }
+      if ((y && this.height > 0) || (!y && this.height < 0)) {
+        return this.height = -this.height;
+      }
+    };
+
+    return Quad;
+
+  })();
 
 }).call(this);

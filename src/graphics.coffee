@@ -24,6 +24,8 @@ class Graphics
 	rotate: (angle) -> @ctx.rotate angle
 	translate: (x, y) -> @ctx.translate x, y
 
+	# setters
+
 	setBackgroundColor: (r, g, b, a = 255) ->
 		if _.isArray r
 			@setBackgroundColor r...
@@ -86,10 +88,30 @@ class Graphics
 
 			@pop()
 
+	drawq: (image, quad, x, y, r = 0, sx = 1, sy = sx, ox = 0, oy = 0) ->
+		if r is 0 and sx is 1 and sy is sx
+			x = x - ox
+			y = y - oy
+			image.drawQuad @ctx, quad, x, y
+		else
+			@push()
+
+			@translate x, y
+			@rotate r
+			@translate -ox, -oy
+			@scale sx, sy
+
+			image.drawQuad @ctx, quad, 0, 0
+
+			@pop()
+
 	# factories
 
 	newImage: (image) ->
 		new Image image
+
+	newQuad: (x, y, width, height) ->
+		new Quad x, y, width, height
 
 
 
@@ -110,3 +132,28 @@ class Image extends Drawable
 
 	draw: (ctx, x, y) ->
 		ctx.drawImage @image, x, y
+
+	drawQuad: (ctx, quad, x, y) ->
+		ctx.drawImage @image, quad.x, quad.y, quad.width, quad.height, x, y, quad.width, quad.height
+
+
+
+class Quad
+	@define 'love/graphics/quad'
+
+	constructor: (x, y, width, height) ->
+		@setViewport x, y, width, height
+
+	setViewport: (@x, @y, @width, @height) ->
+
+	getViewport: ->
+		[@x, @y, @width, @height]
+
+	flip: (x, y) ->
+		if (x and @width > 0) or (not x and @width < 0)
+			@width = -@width
+
+		if (y and @height > 0) or (not y and @height < 0)
+			@height = -@height
+
+
