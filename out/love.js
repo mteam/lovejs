@@ -12,7 +12,8 @@
         graphics: require('love/graphics'),
         keyboard: require('love/keyboard'),
         mouse: require('love/mouse'),
-        assets: require('love/assets')
+        assets: require('love/assets'),
+        filesystem: require('love/filesystem/localStorage')
       };
     }
 

@@ -8,6 +8,7 @@ class Love
 			keyboard: require 'love/keyboard'
 			mouse: require 'love/mouse'
 			assets: require 'love/assets'
+			filesystem: require 'love/filesystem/localStorage'
 
 	run: ->
 		@load?()
