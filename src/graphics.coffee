@@ -18,8 +18,11 @@ class Graphics
 	clear: ->
 		@ctx.clearRect 0, 0, @width, @height
 
-	setBackgroundColor: (r, g, b) ->
-		@canvas.style.background = rgb r, g, b
+	setBackgroundColor: (r, g, b, a = 255) ->
+		if _.isArray r
+			@setBackgroundColor r...
+		else
+			@canvas.style.background = rgba r, g, b, a
 	
 	setLineWidth: (width) ->
 		@ctx.lineWidth = width

@@ -30,8 +30,13 @@
       return this.ctx.clearRect(0, 0, this.width, this.height);
     };
 
-    Graphics.prototype.setBackgroundColor = function(r, g, b) {
-      return this.canvas.style.background = rgb(r, g, b);
+    Graphics.prototype.setBackgroundColor = function(r, g, b, a) {
+      if (a == null) a = 255;
+      if (_.isArray(r)) {
+        return this.setBackgroundColor.apply(this, r);
+      } else {
+        return this.canvas.style.background = rgba(r, g, b, a);
+      }
     };
 
     Graphics.prototype.setLineWidth = function(width) {
