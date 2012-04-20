@@ -4,7 +4,7 @@ class Love
 	constructor: ->
 		@modules =
 			timer: require 'love/timer'
-			graphics: require 'love/graphics'
+			graphics: require 'love/graphics/canvas'
 			keyboard: require 'love/keyboard'
 			mouse: require 'love/mouse'
 			assets: require 'love/assets'

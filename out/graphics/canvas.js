@@ -1,23 +1,30 @@
 (function() {
-  var Asset, Drawable, Graphics, Image, Quad, rgb, rgba,
+  var Asset, Canvas, Drawable, Image, Quad, rgb, rgba,
+    __slice = Array.prototype.slice,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   Asset = require('love/assets/asset');
 
-  rgb = rgba = function(r, g, b, a) {
-    if (a != null) {
-      return "rgba(" + r + ", " + g + ", " + b + ", " + (a / 255) + ")";
-    } else {
-      return "rgb(" + r + ", " + g + ", " + b + ")";
-    }
+  Quad = require('love/graphics/quad');
+
+  rgb = function() {
+    var rgb;
+    rgb = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+    return "rgb(" + (rgb.join(', ')) + ")";
   };
 
-  Graphics = (function() {
+  rgba = function() {
+    var a, rgb, _i;
+    rgb = 2 <= arguments.length ? __slice.call(arguments, 0, _i = arguments.length - 1) : (_i = 0, []), a = arguments[_i++];
+    return "rgba(" + (rgb.join(', ')) + ")";
+  };
 
-    Graphics.define('love/graphics');
+  Canvas = (function() {
 
-    function Graphics(_arg) {
+    Canvas.define('love/graphics/canvas');
+
+    function Canvas(_arg) {
       var canvas;
       canvas = _arg.element;
       this.canvas = canvas[0];
@@ -26,31 +33,31 @@
       this.ctx = this.canvas.getContext('2d');
     }
 
-    Graphics.prototype.clear = function() {
+    Canvas.prototype.clear = function() {
       return this.ctx.clearRect(0, 0, this.width, this.height);
     };
 
-    Graphics.prototype.push = function() {
+    Canvas.prototype.push = function() {
       return this.ctx.save();
     };
 
-    Graphics.prototype.pop = function() {
+    Canvas.prototype.pop = function() {
       return this.ctx.restore();
     };
 
-    Graphics.prototype.scale = function(x, y) {
+    Canvas.prototype.scale = function(x, y) {
       return this.ctx.scale(x, y);
     };
 
-    Graphics.prototype.rotate = function(angle) {
+    Canvas.prototype.rotate = function(angle) {
       return this.ctx.rotate(angle);
     };
 
-    Graphics.prototype.translate = function(x, y) {
+    Canvas.prototype.translate = function(x, y) {
       return this.ctx.translate(x, y);
     };
 
-    Graphics.prototype.setBackgroundColor = function(r, g, b, a) {
+    Canvas.prototype.setBackgroundColor = function(r, g, b, a) {
       if (a == null) a = 255;
       if (_.isArray(r)) {
         return this.setBackgroundColor.apply(this, r);
@@ -59,19 +66,19 @@
       }
     };
 
-    Graphics.prototype.setLineWidth = function(width) {
+    Canvas.prototype.setLineWidth = function(width) {
       return this.ctx.lineWidth = width;
     };
 
-    Graphics.prototype.setLineCap = function(cap) {
+    Canvas.prototype.setLineCap = function(cap) {
       return this.ctx.lineCap = cap;
     };
 
-    Graphics.prototype.setLineJoin = function(join) {
+    Canvas.prototype.setLineJoin = function(join) {
       return this.ctx.lineJoin = join;
     };
 
-    Graphics.prototype.setColor = function(r, g, b, a, type) {
+    Canvas.prototype.setColor = function(r, g, b, a, type) {
       var str;
       if ((r != null) && (g != null) && (b != null)) {
         str = rgb(r, g, b);
@@ -84,7 +91,7 @@
       if (a != null) return this.ctx.globalAlpha = a / 255;
     };
 
-    Graphics.prototype.rectangle = function(mode, x, y, width, height) {
+    Canvas.prototype.rectangle = function(mode, x, y, width, height) {
       var func;
       func = (function() {
         switch (mode) {
@@ -97,7 +104,7 @@
       return this.ctx[func](x, y, width, height);
     };
 
-    Graphics.prototype.circle = function(mode, x, y, radius) {
+    Canvas.prototype.circle = function(mode, x, y, radius) {
       this.ctx.beginPath();
       this.ctx.arc(x, y, radius, 0, Math.PI * 2);
       switch (mode) {
@@ -108,7 +115,7 @@
       }
     };
 
-    Graphics.prototype.line = function() {
+    Canvas.prototype.line = function() {
       var i, x, y, _len, _step;
       this.ctx.beginPath();
       for (i = 0, _len = arguments.length, _step = 2; i < _len; i += _step) {
@@ -119,7 +126,7 @@
       return this.ctx.stroke();
     };
 
-    Graphics.prototype.draw = function(drawable, x, y, r, sx, sy, ox, oy) {
+    Canvas.prototype.draw = function(drawable, x, y, r, sx, sy, ox, oy) {
       if (r == null) r = 0;
       if (sx == null) sx = 1;
       if (sy == null) sy = sx;
@@ -140,7 +147,7 @@
       }
     };
 
-    Graphics.prototype.drawq = function(image, quad, x, y, r, sx, sy, ox, oy) {
+    Canvas.prototype.drawq = function(image, quad, x, y, r, sx, sy, ox, oy) {
       if (r == null) r = 0;
       if (sx == null) sx = 1;
       if (sy == null) sy = sx;
@@ -161,15 +168,15 @@
       }
     };
 
-    Graphics.prototype.newImage = function(image) {
+    Canvas.prototype.newImage = function(image) {
       return new Image(image);
     };
 
-    Graphics.prototype.newQuad = function(x, y, width, height) {
+    Canvas.prototype.newQuad = function(x, y, width, height) {
       return new Quad(x, y, width, height);
     };
 
-    return Graphics;
+    return Canvas;
 
   })();
 
@@ -177,7 +184,7 @@
 
     function Drawable() {}
 
-    Drawable.define('love/graphics/drawable');
+    Drawable.define('love/graphics/canvas/drawable');
 
     Drawable.prototype.draw = function(ctx, x, y) {};
 
@@ -189,7 +196,7 @@
 
     __extends(Image, _super);
 
-    Image.define('love/graphics/image');
+    Image.define('love/graphics/canvas/image');
 
     function Image(image) {
       if (image instanceof Asset) image = image.getContent();
@@ -207,37 +214,5 @@
     return Image;
 
   })(Drawable);
-
-  Quad = (function() {
-
-    Quad.define('love/graphics/quad');
-
-    function Quad(x, y, width, height) {
-      this.setViewport(x, y, width, height);
-    }
-
-    Quad.prototype.setViewport = function(x, y, width, height) {
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
-    };
-
-    Quad.prototype.getViewport = function() {
-      return [this.x, this.y, this.width, this.height];
-    };
-
-    Quad.prototype.flip = function(x, y) {
-      if ((x && this.width > 0) || (!x && this.width < 0)) {
-        this.width = -this.width;
-      }
-      if ((y && this.height > 0) || (!y && this.height < 0)) {
-        return this.height = -this.height;
-      }
-    };
-
-    return Quad;
-
-  })();
 
 }).call(this);

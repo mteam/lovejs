@@ -9,7 +9,7 @@
     function Love() {
       this.step = __bind(this.step, this);      this.modules = {
         timer: require('love/timer'),
-        graphics: require('love/graphics'),
+        graphics: require('love/graphics/canvas'),
         keyboard: require('love/keyboard'),
         mouse: require('love/mouse'),
         assets: require('love/assets'),

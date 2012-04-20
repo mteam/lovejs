@@ -1,5 +1,5 @@
 build:
-	coffee -o out/ -c src/*
+	coffee -o out/ -c src/
 
 watch:
-	coffee -o out/ -wc src/*
+	coffee -o out/ -wc src/
