@@ -13,26 +13,31 @@ class Keyboard extends Base
 		@keys = {}
 
 	keyDown: (event) =>
-		key = event.keyCode
+		code = event.keyCode
 
-		unless @isDown key
-			@trigger 'keyDown', @getName key
+		unless @keys[code]
+			@trigger 'keyDown', @getName code
 
-		@keys[key] = yes
+		@keys[code] = yes
 
 	keyUp: (event) =>
-		key = event.keyCode
+		code = event.keyCode
 
-		if @isDown key
-			@trigger 'keyUp', @getName key
+		if @keys[code]
+			@trigger 'keyUp', @getName code
 
-		@keys[key] = no
+		@keys[code] = no
 
 	isDown: (key) ->
-		!!@keys[key]
+		code = @getCode key
+		!!@keys[code]
 
 	getName: (code) ->
 		keys[code] or code
+
+	getCode: (key) ->
+		for code, name of keys when name is key
+			return code
 
 keys =
 	8: "backspace"

@@ -25,25 +25,35 @@
     }
 
     Keyboard.prototype.keyDown = function(event) {
-      var key;
-      key = event.keyCode;
-      if (!this.isDown(key)) this.trigger('keyDown', this.getName(key));
-      return this.keys[key] = true;
+      var code;
+      code = event.keyCode;
+      if (!this.keys[code]) this.trigger('keyDown', this.getName(code));
+      return this.keys[code] = true;
     };
 
     Keyboard.prototype.keyUp = function(event) {
-      var key;
-      key = event.keyCode;
-      if (this.isDown(key)) this.trigger('keyUp', this.getName(key));
-      return this.keys[key] = false;
+      var code;
+      code = event.keyCode;
+      if (this.keys[code]) this.trigger('keyUp', this.getName(code));
+      return this.keys[code] = false;
     };
 
     Keyboard.prototype.isDown = function(key) {
-      return !!this.keys[key];
+      var code;
+      code = this.getCode(key);
+      return !!this.keys[code];
     };
 
     Keyboard.prototype.getName = function(code) {
       return keys[code] || code;
+    };
+
+    Keyboard.prototype.getCode = function(key) {
+      var code, name;
+      for (code in keys) {
+        name = keys[code];
+        if (name === key) return code;
+      }
     };
 
     return Keyboard;
