@@ -1,9 +1,8 @@
-Base = require 'love/base'
-Events = require 'love/events'
+Base = require './base'
+Events = require './events'
 
 class Mouse extends Base
 	@include Events
-	@define 'love/mouse'
 
 	constructor: ({@element}) ->
 		@element.bind 'mousemove mousedown mouseup', @updatePosition
@@ -50,3 +49,5 @@ class Mouse extends Base
 	getX: -> @x
 	getY: -> @y
 	getPosition: -> [@x, @y]
+
+module.exports = Mouse

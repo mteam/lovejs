@@ -1,9 +1,8 @@
-Base = require 'love/base'
-Events = require 'love/events'
+Base = require './base'
+Events = require './events'
 
 class Timer extends Base
 	@include Events
-	@define 'love/timer'
 	
 	constructor: ->
 		@last = @getMicroTime()
@@ -35,3 +34,5 @@ class Timer extends Base
 	
 	getMicroTime: ->
 		+new Date / 1000
+
+module.exports = Timer

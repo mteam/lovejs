@@ -1,5 +1,5 @@
-Asset = require 'love/assets/asset'
-Quad = require 'love/graphics/quad'
+Quad = require '../quad'
+Image = require './image'
 
 
 
@@ -9,7 +9,6 @@ rgba = (rgb..., a) -> "rgba(#{rgb.join ', '})" # rgba(0xab, 0xcd, 0xed)
 
 
 class Canvas
-	@define 'love/graphics/canvas'
 
 	constructor: ({element: canvas}) ->
 		@canvas = canvas[0]
@@ -115,25 +114,4 @@ class Canvas
 	newQuad: (x, y, width, height) ->
 		new Quad x, y, width, height
 
-
-
-class Drawable
-	@define 'love/graphics/canvas/drawable'
-
-	draw: (ctx, x, y) ->
-
-
-
-class Image extends Drawable
-	@define 'love/graphics/canvas/image'
-
-	constructor: (image) ->
-		if image instanceof Asset
-			image = image.getContent()
-		@image = image
-
-	draw: (ctx, x, y) ->
-		ctx.drawImage @image, x, y
-
-	drawQuad: (ctx, quad, x, y) ->
-		ctx.drawImage @image, quad.x, quad.y, quad.width, quad.height, x, y, quad.width, quad.height
+module.exports = Canvas

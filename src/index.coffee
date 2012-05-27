@@ -1,14 +1,13 @@
 class Love
-	@define 'love'
 
 	constructor: ->
 		@modules =
-			timer: require 'love/timer'
-			graphics: require 'love/graphics/canvas'
-			keyboard: require 'love/keyboard'
-			mouse: require 'love/mouse'
-			assets: require 'love/assets'
-			filesystem: require 'love/filesystem/localStorage'
+			timer: require './timer'
+			graphics: require './graphics/canvas'
+			keyboard: require './keyboard'
+			mouse: require './mouse'
+			assets: require './assets'
+			filesystem: require './filesystem/local_storage'
 
 	run: ->
 		@load?()
@@ -42,6 +41,6 @@ class Love
 		@draw?()
 		@graphics.pop()
 
-
+module.exports = Love
 
 @love = new Love

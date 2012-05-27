@@ -1,9 +1,8 @@
-Base = require 'love/base'
-Events = require 'love/events'
+Base = require './base'
+Events = require './events'
 
 class Keyboard extends Base
 	@include Events
-	@define 'love/keyboard'
 
 	constructor: ->
 		window.addEventListener 'keydown', @keyDown
@@ -38,6 +37,8 @@ class Keyboard extends Base
 	getCode: (key) ->
 		for code, name of keys when name is key
 			return code
+
+module.exports = Keyboard
 
 keys =
 	8: "backspace"
