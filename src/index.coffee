@@ -1,46 +1,36 @@
-class Love
+love = exports
 
-	constructor: ->
-		@modules =
-			timer: require './timer'
-			graphics: require './graphics/canvas'
-			keyboard: require './keyboard'
-			mouse: require './mouse'
-			assets: require './assets'
-			filesystem: require './filesystem/local_storage'
+love.timer = require './timer'
+love.graphics = require './graphics'
+love.keyboard = require './keyboard'
+love.mouse = require './mouse'
+love.assets = require './assets'
 
-	run: ->
-		@load?()
+love.run = ->
+	love.load?()
+	createHandlers()
 
-		if @assets.loaded()
-			@timer.step()
-		else
-			@assets.on 'load', =>
-				@timer.step()
+	love.assets.loaded ->
+		love.timer.step()
 
-	init: (config) ->
-		for name, module of @modules when module
-			@[name] = new module config
+love.step = ->
+	love.update? love.timer.getDelta()
+	love.graphics.clear()
+	love.graphics.push()
+	love.draw?()
+	love.graphics.pop()
 
-		@timer.on 'step', @step
+createHandlers = ->
+	if love.keyboard?
+		love.keyboard.createHandlers()
+		if love.keypressed? then love.keyboard.on('keyDown', love.keypressed.bind(love))
+		if love.keyreleased? then love.keyboard.on('keyUp', love.keyreleased.bind(love))
 
-		if @keyboard?
-			if @keyDown? then @keyboard.on 'keyDown', @keyDown.bind this
-			if @keyUp? then @keyboard.on 'keyUp', @keyUp.bind this
+	if love.mouse?
+		love.mouse.createHandlers()
+		if love.mousepressed? then love.mouse.on('mouseDown', love.mousepressed.bind(love))
+		if love.mousereleased? then love.mouse.on('mouseUp', love.mousereleased.bind(love))
 
-		if @mouse?
-			if @mouseDown? then @mouse.on 'mouseDown', @mouseDown.bind this
-			if @mouseUp? then @mouse.on 'mouseUp', @mouseUp.bind this
+	love.timer.on('step', love.step)
 
-	step: =>
-		@update? @timer.getDelta()
 
-		@graphics.clear()
-
-		@graphics.push()
-		@draw?()
-		@graphics.pop()
-
-module.exports = Love
-
-@love = new Love

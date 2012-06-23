@@ -1,9 +1,10 @@
 class Quad
 
-	constructor: (x, y, width, height) ->
+	constructor: (x, y, width, height, @sw, @sh) ->
 		@setViewport x, y, width, height
 
 	setViewport: (@x, @y, @width, @height) ->
+		return
 
 	getViewport: ->
 		[@x, @y, @width, @height]

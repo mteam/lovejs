@@ -1,11 +1,8 @@
-Base = require '../base'
-Events = require '../events'
+eventify = require '../events'
 
-class Asset extends Base
-  @include Events
-
+class Asset
   constructor: ->
-    @events()
+    eventify(this)
 
   loaded: =>
     @trigger 'load'

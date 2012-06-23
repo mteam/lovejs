@@ -3,3 +3,6 @@ build:
 
 watch:
 	coffee -o out/ -wc src/
+
+clean:
+	rm -r out/*

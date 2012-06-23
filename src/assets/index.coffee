@@ -1,36 +1,27 @@
-Base = require '../base'
-Events = require '../events'
+assets = exports
 Image = require './image'
 
-class Assets extends Base
-	@include Events
+loaded = 0
+assets = 0
+onLoad = null
 
-	constructor: ->
-		@_expected = 0
-		@_done = 0
-		@assets = []
-		@events()
+assetLoaded = ->
+	loaded++
+	if assets is loaded and onLoad?
+		onLoad()
 
-	load: (asset) ->
-		@expect()
-		asset.on 'load', @done
-		asset.load()
+assets.load = (asset) ->
+	assets++
+	asset.on('load', assetLoaded)
+	asset.load()
 
-	loaded: ->
-		@_done is @_expected
+assets.loaded = (cb) ->
+	if assets is loaded
+		cb()
+	else
+		onLoad = cb
 
-	newImage: (path) ->
-		image = new Image path
-		@load image
-		image
-
-	# private
-
-	expect: ->
-		@_expected++
-
-	done: =>
-		@_done++
-		if @loaded() then @trigger 'load'
-
-module.exports = Assets
+assets.newImage = ->
+	image = new Image(arguments...)
+	assets.load(image)
+	image

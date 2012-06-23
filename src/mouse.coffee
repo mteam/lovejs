@@ -1,53 +1,65 @@
-Base = require './base'
-Events = require './events'
+mouse = exports
+graphics = require './graphics'
+eventify = require './events'
 
-class Mouse extends Base
-	@include Events
+eventify(mouse)
+pressed = {}
+x = y = 0
 
-	constructor: ({@element}) ->
-		@element.bind 'mousemove mousedown mouseup', @updatePosition
-		@element.bind 'mousedown', @mouseDown
-		@element.bind 'mouseup', @mouseUp
+mouse.createHandlers = ->
+	el = graphics.getCanvas().el
 
-		@buttons = {}
-		@events()
-		@x = @y = 0
+	for event in ['mousemove', 'mousedown', 'mouseup']
+		el.addEventListener(event, updatePosition)
 
-	mouseDown: (event) =>
-		button = event.button
+	el.addEventListener('mouseup', mouse.up)
+	el.addEventListener('mousedown', mouse.down)
 
-		unless @isDown button
-			@trigger 'mouseDown', button, @x, @y
+mouse.up = (event) ->
+	button = event.button
 
-		@buttons[button] = yes
+	if mouse.isDown(button)
+		mouse.trigger('mouseUp', button, x, y)
 
-		return
+	pressed[button] = no
 
-	mouseUp: (event) =>
-		button = event.button
+mouse.down = (event) ->
+	button = event.button
 
-		if @isDown button
-			@trigger 'mouseUp', button, @x, @y
+	unless mouse.isDown(button)
+		mouse.trigger('mouseDown', button, x, y)
 
-		@buttons[button] = no
+	pressed[button] = yes
 
-		return
+mouse.isDown = (button) ->
+	!!pressed[button]
 
-	updatePosition: (event) =>
-		if event.offsetX?
-			@x = event.offsetX
-			@y = event.offsetY
-		else
-			offset = @element.offset()
-			@x = event.pageX - offset.left
-			@y = event.pageY - offset.top
-		return
+mouse.getPosition = ->
+	[x, y]
 
-	isDown: (button) ->
-		!!@buttons[button]
+mouse.getX = ->
+	x
 
-	getX: -> @x
-	getY: -> @y
-	getPosition: -> [@x, @y]
+mouse.getY = ->
+	y
 
-module.exports = Mouse
+updatePosition = (event) ->
+	if event.offsetX?
+		x = event.offsetX
+		y = event.offsetY
+	else
+		offset = getOffset(event.target)
+		x = event.pageX - offset.left
+		y = event.pageY - offset.top
+	return
+
+getOffset = (element) ->
+	left = top = 0
+	if element.offsetParent
+		loop
+			left += element.offsetLeft
+			top += element.offsetTop
+			break unless element = element.offsetParent
+		{left, top}
+
+

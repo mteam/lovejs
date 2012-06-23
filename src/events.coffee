@@ -1,14 +1,15 @@
-module.exports =
-  events: ->
-    @_events = {}
+module.exports = (obj) ->
+  events = {}
 
-  on: (event, callback) ->
-    @_events[event] ?= []
-    @_events[event].push callback
-    this
+  obj.on ?= (event, cb) ->
+    events[event] ?= []
+    events[event].push cb
+    obj
 
-  trigger: (event, args...) ->
-    return unless @_events[event]
-    for callback in @_events[event]
+  obj.trigger ?= (event, args...) ->
+    return unless events[event]
+    for callback in events[event]
       callback args...
-    this
+    obj
+
+  obj.__events ?= events

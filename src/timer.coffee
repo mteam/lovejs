@@ -1,38 +1,38 @@
-Base = require './base'
-Events = require './events'
+timer = exports
+eventify = require './events'
 
-class Timer extends Base
-	@include Events
-	
-	constructor: ->
-		@last = @getMicroTime()
-		@events()
+eventify(timer)
 
-	request: (
-			window.requestAnimationFrame or
-			window.webkitRequestAnimationFrame or
-			window.mozRequestAnimationFrame or
-			window.msRequestAnimationFrame or
-			(cb) -> window.setTimeout cb, 1000 / 60
-		).bind window
-	
-	step: =>
-		@updateDelta()
-		@trigger 'step'
-		@request @step
+requestFrame = (
+	window.requestAnimationFrame or
+	window.webkitRequestAnimationFrame or
+	window.mozRequestAnimationFrame or
+	window.msRequestAnimationFrame or
+	(cb) -> window.setTimeout(cb, 1000 / 60)
+).bind window
 
-	updateDelta: ->
-		now = @getMicroTime()
-		@dt = now - @last
-		@last = now
-	
-	getDelta: ->
-		@dt
-	
-	getFps: ->
-		1 / @getDelta()
-	
-	getMicroTime: ->
-		+new Date / 1000
+getMicroTime = ->
+	+new Date / 1000
 
-module.exports = Timer
+dt = 0
+last = getMicroTime()
+now = 0
+
+updateDelta = ->
+	now = getMicroTime()
+	dt = now - last
+	last = now
+
+timer.step = ->
+	updateDelta()
+	timer.trigger('step')
+	requestFrame(timer.step)
+
+timer.getDelta = ->
+	dt
+
+timer.getFPS = ->
+	1 / timer.getDelta()
+
+timer.getMicroTime = getMicroTime
+

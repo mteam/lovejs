@@ -1,46 +1,39 @@
-Base = require './base'
-Events = require './events'
+keyboard = exports
+eventify = require './events'
 
-class Keyboard extends Base
-	@include Events
+pressed = {}
+eventify(keyboard)
 
-	constructor: ->
-		window.addEventListener 'keydown', @keyDown
-		window.addEventListener 'keyup', @keyUp
+getName = (code) ->
+	keys[code] or code
 
-		@events()
-		@keys = {}
+getCode = (key) ->
+	for code, name of keys when name is key
+		return code
 
-	keyDown: (event) =>
-		code = event.keyCode
+keyDown = (event) ->
+	code = event.keyCode
 
-		unless @keys[code]
-			@trigger 'keyDown', @getName code
+	unless pressed[code]
+		keyboard.trigger('keyDown', getName(code))
 
-		@keys[code] = yes
+	pressed[code] = yes
 
-	keyUp: (event) =>
-		code = event.keyCode
+keyUp = (event) ->
+	code = event.keyCode
 
-		if @keys[code]
-			@trigger 'keyUp', @getName code
+	if pressed[code]
+		keyboard.trigger('keyUp', getName(code))
 
-		@keys[code] = no
+	pressed[code] = no
 
-	isDown: (key) ->
-		code = @getCode key
-		!!@keys[code]
+keyboard.createHandlers = ->
+	window.addEventListener('keydown', keyDown)
+	window.addEventListener('keyup', keyUp)
 
-	getName: (code) ->
-		keys[code] or code
+# key names
 
-	getCode: (key) ->
-		for code, name of keys when name is key
-			return code
-
-module.exports = Keyboard
-
-keys =
+names =
 	8: "backspace"
 	9: "tab"
 	13: "return"
@@ -78,16 +71,16 @@ keys =
 	222: "'"
 
 # a-z
-for letter, i in 'abcdefghijklmnopqrstuvwxyz'.split ''
-	keys[i + 65] = letter
+for letter, i in 'abcdefghijklmnopqrstuvwxyz'.split('')
+	names[i + 65] = letter
 
 # numbers
 for i in [0..9]
-	keys[i + 48] = i
-	keys[i + 96] = "kp#{i}"
+	names[i + 48] = i
+	names[i + 96] = "kp#{i}"
 
 # f keys
 for i in [1..12]
-	keys[i + 111] = "f#{i}"
+	names[i + 111] = "f#{i}"
 
 
