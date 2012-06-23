@@ -2,21 +2,21 @@ assets = exports
 Image = require './image'
 
 loaded = 0
-assets = 0
+expected = 0
 onLoad = null
 
 assetLoaded = ->
 	loaded++
-	if assets is loaded and onLoad?
+	if expected is loaded and onLoad?
 		onLoad()
 
 assets.load = (asset) ->
-	assets++
+	expected++
 	asset.on('load', assetLoaded)
 	asset.load()
 
 assets.loaded = (cb) ->
-	if assets is loaded
+	if expected is loaded
 		cb()
 	else
 		onLoad = cb

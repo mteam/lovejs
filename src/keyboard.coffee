@@ -5,10 +5,10 @@ pressed = {}
 eventify(keyboard)
 
 getName = (code) ->
-	keys[code] or code
+	names[code] or code
 
 getCode = (key) ->
-	for code, name of keys when name is key
+	for code, name of names when name is key
 		return code
 
 keyDown = (event) ->

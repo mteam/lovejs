@@ -11,13 +11,14 @@
 	<canvas id="game" width="600" height="400"></canvas>
 
 	<script type="text/javascript">
+		var love = require('lovejs');
 		var canvas = document.getElementById('game');
 
-    love.load = function () {
-      love.graphics.setCanvas(canvas);
-    };
+		love.load = function () {
+			love.graphics.setCanvas(canvas);
+		};
 
-    love.run();
+		love.run();
 	</script>
 </body>
 </html>
