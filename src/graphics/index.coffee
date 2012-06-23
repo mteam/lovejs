@@ -15,7 +15,7 @@ module.exports =
       canvas = new Canvas(canvas)
 
     if canvas is null
-      $canvas = $first
+      canvas = $first
 
     if canvas instanceof Canvas
       if $first is null
