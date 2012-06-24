@@ -21,7 +21,7 @@ mouse.up = (event) ->
 	button = getButton(event)
 
 	if mouse.isDown(button)
-		mouse.trigger('mouseUp', button, pos.x, pos.y)
+		mouse.trigger('mouseUp', pos.x, pos.y, button)
 
 	pressed[button] = no
 
@@ -29,7 +29,7 @@ mouse.down = (event) ->
 	button = getButton(event)
 
 	unless mouse.isDown(button)
-		mouse.trigger('mouseDown', button, pos.x, pos.y)
+		mouse.trigger('mouseDown', pos.x, pos.y, button)
 
 	pressed[button] = yes
 
@@ -45,7 +45,7 @@ mouse.wheel = (event) ->
 		else if event.wheelDelta > 0
 			button = "wu"
 
-	mouse.trigger('mouseDown', button, pos.x, pos.y)
+	mouse.trigger('mouseDown', pos.x, pos.y, button)
 
 mouse.isDown = (button) ->
 	!!pressed[button]
