@@ -4,7 +4,7 @@ eventify = require './events'
 
 eventify(mouse)
 pressed = {}
-x = y = 0
+pos = x: 0, y: 0
 
 mouse.createHandlers = ->
 	el = graphics.getCanvas().el
@@ -14,36 +14,55 @@ mouse.createHandlers = ->
 
 	el.addEventListener('mouseup', mouse.up)
 	el.addEventListener('mousedown', mouse.down)
+	el.addEventListener('mousewheel', mouse.wheel)
+	el.addEventListener('DOMMouseScroll', mouse.wheel)
 
 mouse.up = (event) ->
-	button = event.button
+	button = getButton(event)
 
 	if mouse.isDown(button)
-		mouse.trigger('mouseUp', button, x, y)
+		mouse.trigger('mouseUp', button, pos.x, pos.y)
 
 	pressed[button] = no
 
 mouse.down = (event) ->
-	button = event.button
+	button = getButton(event)
 
 	unless mouse.isDown(button)
-		mouse.trigger('mouseDown', button, x, y)
+		mouse.trigger('mouseDown', button, pos.x, pos.y)
 
 	pressed[button] = yes
+
+mouse.wheel = (event) ->
+	if event.detail?
+		if event.detail > 0
+			button = "wd"
+		else if event.detail < 0
+			button = "wu"
+	else if event.wheelDelta?
+		if event.wheelDelta < 0
+			button = "wd"
+		else if event.wheelDelta > 0
+			button = "wu"
+
+	mouse.trigger('mouseDown', button, pos.x, pos.y)
 
 mouse.isDown = (button) ->
 	!!pressed[button]
 
 mouse.getPosition = ->
-	[x, y]
+	[pos.x, pos.y]
 
 mouse.getX = ->
-	x
+	pos.x
 
 mouse.getY = ->
-	y
+	pos.y
 
 updatePosition = (event) ->
+	[pos.x, pos.y] = getPosition(event)
+
+getPosition = (event) ->
 	if event.offsetX?
 		x = event.offsetX
 		y = event.offsetY
@@ -51,7 +70,7 @@ updatePosition = (event) ->
 		offset = getOffset(event.target)
 		x = event.pageX - offset.left
 		y = event.pageY - offset.top
-	return
+	[x, y]
 
 getOffset = (element) ->
 	left = top = 0
@@ -60,6 +79,10 @@ getOffset = (element) ->
 			left += element.offsetLeft
 			top += element.offsetTop
 			break unless element = element.offsetParent
-		{left, top}
+	{left, top}
 
-
+getButton = (event) ->
+	switch event.button
+		when 0 then 'l'
+		when 1 then 'm'
+		when 2 then 'r'

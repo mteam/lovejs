@@ -1,8 +1,5 @@
 build:
-	coffee -o out/ -c src/
-
-watch:
-	coffee -o out/ -wc src/
+	mallow build -o lib/love.js
 
 clean:
-	rm -r out/*
+	rm lib/love.js

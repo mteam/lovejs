@@ -16,7 +16,7 @@ love.update = ->
 
 love.draw = ->
   love.graphics.setCanvas(surface)
-  if love.mouse.isDown(0)
+  if love.mouse.isDown('l')
     love.graphics.line(last.x, last.y, curr.x, curr.y)
 
   love.graphics.setCanvas()
