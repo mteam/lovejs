@@ -4,32 +4,39 @@ eventify = require './events'
 pressed = {}
 eventify(keyboard)
 
-getName = (code) ->
+keyboard.createHandlers = ->
+	window.addEventListener('keydown', down)
+	window.addEventListener('keyup', up)
+
+keyboard.isDown = (args...) ->
+	if args.length is 1
+		!!pressed[args[0]]
+	else
+		args.some (key) -> pressed[key]
+
+getKey = (code) ->
 	names[code] or code
 
-getCode = (key) ->
-	for code, name of names when name is key
-		return code
+getCode = (event) ->
+	event.keyCode
 
-keyDown = (event) ->
-	code = event.keyCode
+down = (event) ->
+	code = getCode(event)
+	key = getKey(code)
 
-	unless pressed[code]
-		keyboard.trigger('keyDown', getName(code))
+	unless pressed[key]
+		keyboard.trigger('keyDown', key, code)
 
-	pressed[code] = yes
+	pressed[key] = yes
 
-keyUp = (event) ->
-	code = event.keyCode
+up = (event) ->
+	code = getCode(event)
+	key = getKey(code)
 
-	if pressed[code]
-		keyboard.trigger('keyUp', getName(code))
+	if pressed[key]
+		keyboard.trigger('keyUp', key, code)
 
-	pressed[code] = no
-
-keyboard.createHandlers = ->
-	window.addEventListener('keydown', keyDown)
-	window.addEventListener('keyup', keyUp)
+	pressed[key] = no
 
 # key names
 

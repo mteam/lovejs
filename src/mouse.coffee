@@ -17,7 +17,19 @@ mouse.createHandlers = ->
 	el.addEventListener('mousewheel', mouse.wheel)
 	el.addEventListener('DOMMouseScroll', mouse.wheel)
 
-mouse.up = (event) ->
+mouse.isDown = (button) ->
+	!!pressed[button]
+
+mouse.getPosition = ->
+	[pos.x, pos.y]
+
+mouse.getX = ->
+	pos.x
+
+mouse.getY = ->
+	pos.y
+
+up = (event) ->
 	button = getButton(event)
 
 	if mouse.isDown(button)
@@ -25,7 +37,7 @@ mouse.up = (event) ->
 
 	pressed[button] = no
 
-mouse.down = (event) ->
+down = (event) ->
 	button = getButton(event)
 
 	unless mouse.isDown(button)
@@ -33,7 +45,7 @@ mouse.down = (event) ->
 
 	pressed[button] = yes
 
-mouse.wheel = (event) ->
+wheel = (event) ->
 	if event.detail?
 		if event.detail > 0
 			button = "wd"
@@ -46,18 +58,6 @@ mouse.wheel = (event) ->
 			button = "wu"
 
 	mouse.trigger('mouseDown', pos.x, pos.y, button)
-
-mouse.isDown = (button) ->
-	!!pressed[button]
-
-mouse.getPosition = ->
-	[pos.x, pos.y]
-
-mouse.getX = ->
-	pos.x
-
-mouse.getY = ->
-	pos.y
 
 updatePosition = (event) ->
 	[pos.x, pos.y] = getPosition(event)
