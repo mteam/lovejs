@@ -1,5 +1,7 @@
 love = exports
 
+require './shims'
+
 love.timer = require './timer'
 love.graphics = require './graphics'
 love.keyboard = require './keyboard'
