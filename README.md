@@ -33,3 +33,23 @@ love.draw = ->
 
 love.run()
 ```
+
+## Installation
+
+You just include `lib/love.js` in your HTML:
+
+```html
+<script type="text/javascript" src="love.js"></script>
+```
+
+and then get the `love` object:
+
+```javascript
+var love = require('lovejs');
+```
+
+If you're using some other loader that uses the `require` global variable, you put `mallow.get` instead of `require`:
+
+```javascript
+var love = mallow.get('lovejs');
+```
