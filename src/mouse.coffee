@@ -12,10 +12,10 @@ mouse.createHandlers = ->
 	for event in ['mousemove', 'mousedown', 'mouseup']
 		el.addEventListener(event, updatePosition)
 
-	el.addEventListener('mouseup', mouse.up)
-	el.addEventListener('mousedown', mouse.down)
-	el.addEventListener('mousewheel', mouse.wheel)
-	el.addEventListener('DOMMouseScroll', mouse.wheel)
+	el.addEventListener('mouseup', up)
+	el.addEventListener('mousedown', down)
+	el.addEventListener('mousewheel', wheel)
+	el.addEventListener('DOMMouseScroll', wheel)
 
 mouse.isDown = (button) ->
 	!!pressed[button]
