@@ -1,0 +1,2 @@
+exports.stats = ->
+  require './stats'
