@@ -3,13 +3,14 @@ eventify = require './events'
 
 eventify(timer)
 
-getMicroTime = ->
-	window.performance.now()
+getMicroTime = ->	
+	Date.now() / 1000
 
 dt = 0
 last = getMicroTime()
 
-timer.step = (now) ->
+timer.step = ->
+	now = getMicroTime()
 	dt = now - last
 	last = now
 	timer.trigger('step')
