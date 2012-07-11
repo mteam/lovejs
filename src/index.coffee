@@ -8,6 +8,7 @@ love.keyboard = require './keyboard'
 love.mouse = require './mouse'
 love.assets = require './assets'
 love.utils = require './utils'
+love.eventify = require './events'
 
 love.run = ->
 	love.load?()
