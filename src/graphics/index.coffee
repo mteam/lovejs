@@ -95,6 +95,11 @@ module.exports =
       $canvas.ctx.lineTo(x, y)
     $canvas.ctx.stroke()
 
+  # text
+
+  print: (text, x, y) ->
+    $canvas.ctx.fillText(text, x, y)
+
   # manipulation
 
   push: ->

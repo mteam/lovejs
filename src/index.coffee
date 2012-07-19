@@ -13,9 +13,7 @@ love.eventify = require './events'
 love.run = ->
 	love.load?()
 	createHandlers()
-
-	love.assets.loaded ->
-		love.timer.step()
+	love.timer.step()
 
 love.step = ->
 	love.update? love.timer.getDelta()
