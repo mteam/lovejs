@@ -100,6 +100,13 @@ module.exports =
   print: (text, x, y) ->
     $canvas.ctx.fillText(text, x, y)
 
+  setFont: (name, size) ->
+    $canvas.ctx.font = "#{size}px #{name}"
+
+  getFont: ->
+    match = /^(\d+)\S+ (.+)$/.exec($canvas.ctx.font)
+    name: match[2], size: parseInt(match[1], 10)
+
   # manipulation
 
   push: ->
