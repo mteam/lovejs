@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
+  <meta charset="utf-8">
 
-	<title>LÖVE.js sandbox</title>
+  <title>LÖVE.js sandbox</title>
 
-	<script type="text/javascript" src="../../lib/love.js"></script>
+  <script type="text/javascript" src="../../lib/love.js"></script>
 </head>
 <body>
-	<canvas id="game" width="600" height="400"></canvas>
+  <canvas id="game" width="600" height="400"></canvas>
 
-	<script type="text/javascript">
-		var love = require('lovejs');
-		var canvas = document.getElementById('game');
+  <script type="text/javascript">
+    var love = require('lovejs');
+    var canvas = document.getElementById('game');
 
-		love.load = function () {
-			love.graphics.setCanvas(canvas);
-		};
+    love.load = function () {
+      love.graphics.setCanvas(canvas);
+    };
 
-		love.run();
-	</script>
+    love.run();
+  </script>
 </body>
 </html>

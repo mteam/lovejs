@@ -54,9 +54,9 @@ fpsDiv.appendChild( fpsGraph );
 
 while ( fpsGraph.children.length < 74 ) {
 
-	var bar = document.createElement( 'span' );
-	bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#113';
-	fpsGraph.appendChild( bar );
+  var bar = document.createElement( 'span' );
+  bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#113';
+  fpsGraph.appendChild( bar );
 
 }
 
@@ -78,84 +78,84 @@ msDiv.appendChild( msGraph );
 
 while ( msGraph.children.length < 74 ) {
 
-	var bar = document.createElement( 'span' );
-	bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#131';
-	msGraph.appendChild( bar );
+  var bar = document.createElement( 'span' );
+  bar.style.cssText = 'width:1px;height:30px;float:left;background-color:#131';
+  msGraph.appendChild( bar );
 
 }
 
 var setMode = function ( value ) {
 
-	mode = value;
+  mode = value;
 
-	switch ( mode ) {
+  switch ( mode ) {
 
-		case 0:
-			fpsDiv.style.display = 'block';
-			msDiv.style.display = 'none';
-			break;
-		case 1:
-			fpsDiv.style.display = 'none';
-			msDiv.style.display = 'block';
-			break;
-	}
+    case 0:
+      fpsDiv.style.display = 'block';
+      msDiv.style.display = 'none';
+      break;
+    case 1:
+      fpsDiv.style.display = 'none';
+      msDiv.style.display = 'block';
+      break;
+  }
 
 };
 
 var updateGraph = function ( dom, value ) {
 
-	var child = dom.appendChild( dom.firstChild );
-	child.style.height = value + 'px';
+  var child = dom.appendChild( dom.firstChild );
+  child.style.height = value + 'px';
 
 };
 
 module.exports = {
 
-	domElement: container,
+  domElement: container,
 
-	setMode: setMode,
+  setMode: setMode,
 
-	begin: function () {
+  begin: function () {
 
-		startTime = Date.now();
+    startTime = Date.now();
 
-	},
+  },
 
-	end: function () {
+  end: function () {
 
-		var time = Date.now();
+    var time = Date.now();
 
-		ms = time - startTime;
-		msMin = Math.min( msMin, ms );
-		msMax = Math.max( msMax, ms );
+    ms = time - startTime;
+    msMin = Math.min( msMin, ms );
+    msMax = Math.max( msMax, ms );
 
-		msText.textContent = ms + ' MS (' + msMin + '-' + msMax + ')';
-		updateGraph( msGraph, Math.min( 30, 30 - ( ms / 200 ) * 30 ) );
+    msText.textContent = ms + ' MS (' + msMin + '-' + msMax + ')';
+    updateGraph( msGraph, Math.min( 30, 30 - ( ms / 200 ) * 30 ) );
 
-		frames ++;
+    frames ++;
 
-		if ( time > prevTime + 1000 ) {
+    if ( time > prevTime + 1000 ) {
 
-			fps = Math.round( ( frames * 1000 ) / ( time - prevTime ) );
-			fpsMin = Math.min( fpsMin, fps );
-			fpsMax = Math.max( fpsMax, fps );
+      fps = Math.round( ( frames * 1000 ) / ( time - prevTime ) );
+      fpsMin = Math.min( fpsMin, fps );
+      fpsMax = Math.max( fpsMax, fps );
 
-			fpsText.textContent = fps + ' FPS (' + fpsMin + '-' + fpsMax + ')';
-			updateGraph( fpsGraph, Math.min( 30, 30 - ( fps / 100 ) * 30 ) );
+      fpsText.textContent = fps + ' FPS (' + fpsMin + '-' + fpsMax + ')';
+      updateGraph( fpsGraph, Math.min( 30, 30 - ( fps / 100 ) * 30 ) );
 
-			prevTime = time;
-			frames = 0;
+      prevTime = time;
+      frames = 0;
 
-		}
+    }
 
-		return time;
+    return time;
 
-	},
+  },
 
-	update: function () {
+  update: function () {
 
-		startTime = this.end();
+    startTime = this.end();
 
-	}
+  }
 
 };
