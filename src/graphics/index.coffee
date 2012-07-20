@@ -107,6 +107,18 @@ module.exports =
     match = /^(\d+)\S+ (.+)$/.exec($canvas.ctx.font)
     name: match[2], size: parseInt(match[1], 10)
 
+  setTextAlign: (align) ->
+    $canvas.ctx.textAlign = align
+
+  getTextAlign: ->
+    $canvas.ctx.textAlign
+
+  setTextBaseline: (baseline) ->
+    $canvas.ctx.textBaseline = baseline
+
+  getTextBaseline: ->
+    $canvas.ctx.textBaseline
+
   # manipulation
 
   push: ->
