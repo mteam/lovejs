@@ -12,3 +12,5 @@ class Image extends Drawable
 
   drawq: (ctx, q, x, y) ->
     ctx.drawImage(@image, q.x, q.y, q.width, q.height, x, y, q.sw, q.sh)
+
+module.exports = Image

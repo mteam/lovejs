@@ -21,13 +21,15 @@ assets.addImages = (names, cb) ->
   images
 
 assets.load = (cb) ->
-  triggered = false
-  main.on 'loaded', ->
-    if not triggered
-      triggered = true
-      cb()
-  
-  main.load()
+  if main.isLoaded()
+    cb()
+  else
+    triggered = false
+    main.on 'loaded', ->
+      if not triggered
+        triggered = true
+        cb()
+    main.load()
 
 assets.getProgress = ->
   main.getProgress()
