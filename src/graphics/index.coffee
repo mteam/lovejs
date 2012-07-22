@@ -26,6 +26,14 @@ module.exports =
 
   getCanvas: -> $canvas
 
+  # canvas info
+
+  getWidth: ->
+    $canvas.width
+
+  getHeight: ->
+    $canvas.height
+
   # background
 
   setBackgroundColor: (r, g, b, a = 0xff) ->
