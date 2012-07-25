@@ -12,7 +12,7 @@ assets.add = (assets, cb) ->
 
 assets.addImage = (name, cb) ->
   image = new Image(name)
-  assets.add(image, cb)
+  assets.add([image], cb)
   image
 
 assets.addImages = (names, cb) ->
