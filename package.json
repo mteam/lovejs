@@ -4,7 +4,7 @@
   "author": "Michal Miskernik <michal@miskernik.sk>",
   "main": "./src/index",
   "directories": {
-    "src": "./src"
+    "source": "src"
   },
   "repository": {
     "type": "git",
