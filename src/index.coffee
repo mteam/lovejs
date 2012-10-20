@@ -25,13 +25,13 @@ love.step = ->
 createHandlers = ->
   if love.keyboard?
     love.keyboard.createHandlers()
-    if love.keypressed? then love.keyboard.on('keyDown', love.keypressed.bind(love))
-    if love.keyreleased? then love.keyboard.on('keyUp', love.keyreleased.bind(love))
+    if love.keypressed? then love.keyboard.on('pressed', love.keypressed.bind(love))
+    if love.keyreleased? then love.keyboard.on('released', love.keyreleased.bind(love))
 
   if love.mouse?
     love.mouse.createHandlers()
-    if love.mousepressed? then love.mouse.on('mouseDown', love.mousepressed.bind(love))
-    if love.mousereleased? then love.mouse.on('mouseUp', love.mousereleased.bind(love))
+    if love.mousepressed? then love.mouse.on('pressed', love.mousepressed.bind(love))
+    if love.mousereleased? then love.mouse.on('released', love.mousereleased.bind(love))
 
   love.timer.on('step', love.step)
 

@@ -25,7 +25,7 @@ down = (event) ->
   key = getKey(code)
 
   unless pressed[key]
-    keyboard.trigger('keyDown', key, code)
+    keyboard.trigger('pressed', key, code)
 
   pressed[key] = yes
 
@@ -34,7 +34,7 @@ up = (event) ->
   key = getKey(code)
 
   if pressed[key]
-    keyboard.trigger('keyUp', key, code)
+    keyboard.trigger('released', key, code)
 
   pressed[key] = no
 
