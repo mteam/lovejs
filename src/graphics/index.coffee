@@ -158,14 +158,16 @@ module.exports =
   newCanvas: ->
     if arguments.length is 0 and $first?
       new Canvas($first.width, $first.height)
+    else if arguments.length is 1
+      new Canvas(arguments[0])
     else
-      new Canvas(arguments...)
+      new Canvas(arguments[0], arguments[1])
 
-  newImage: ->
-    new Image(arguments...)
+  newImage: (image) ->
+    new Image(image)
 
-  newQuad: ->
-    new Quad(arguments...)
+  newQuad: (x, y, w, h) ->
+    new Quad(x, y, w, h)
 
   # export classes
 
