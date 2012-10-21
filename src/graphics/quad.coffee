@@ -1,19 +1,17 @@
 class Quad
+  constructor: ->
+    @setViewport.apply(this, arguments)
 
-  constructor: (x, y, width, height, @sw, @sh) ->
-    @setViewport x, y, width, height
-
-  setViewport: (@x, @y, @width, @height) ->
-    return
+  setViewport: (@x, @y, @w, @h) ->
 
   getViewport: ->
-    [@x, @y, @width, @height]
+    [@x, @y, @w, @h]
 
   flip: (x, y) ->
-    if (x and @width > 0) or (not x and @width < 0)
-      @width = -@width
+    if (x and @w > 0) or (not x and @w < 0)
+      @w = -@w
 
-    if (y and @height > 0) or (not y and @height < 0)
-      @height = -@height
+    if (y and @h > 0) or (not y and @h < 0)
+      @h = -@h
 
 module.exports = Quad

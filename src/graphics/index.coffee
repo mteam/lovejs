@@ -1,6 +1,7 @@
 Canvas = require './canvas'
 Image = require './image'
 Quad = require './quad'
+Drawable = require './drawable'
 
 isElement = (obj) -> obj?.nodeType is 1
 rgb = (rgb...) -> "rgb(#{rgb.join ', '})" # rgba(0xab, 0xcd, 0xef)
@@ -146,35 +147,11 @@ module.exports =
 
   # objects drawing
 
-  draw: (drawable, x, y, r = 0, sx = 1, sy = sx, ox = 0, oy = 0) ->
-    if arguments.length is 3
-      drawable.draw($canvas.ctx, x, y)
-    else
-      @push()
+  draw: (drawable, x, y) ->
+    drawable.draw($canvas.ctx, x, y)
 
-      @translate(x, y)
-      @rotate(r)
-      @translate(-ox, -oy)
-      @scale(sx, sy)
-
-      drawable.draw($canvas.ctx, 0, 0)
-
-      @pop()
-
-  drawq: (drawable, quad, x, y, r = 0, sx = 1, sy = sx, ox = 0, oy = 0) ->
-    if arguments.length is 3
-      drawable.drawQuad($canvas.ctx, quad, x, y)
-    else
-      @push()
-
-      @translate(x, y)
-      @rotate(r)
-      @translate(-ox, -oy)
-      @scale(sx, sy)
-
-      drawable.drawq($canvas.ctx, quad, 0, 0)
-
-      @pop()
+  drawq: (drawable, quad, x, y) ->
+    drawable.drawq($canvas.ctx, quad, x, y)
 
   # factories
 
