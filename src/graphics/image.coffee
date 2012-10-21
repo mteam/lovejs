@@ -5,7 +5,10 @@ class Image extends Drawable
   constructor: (image) ->
     if image instanceof ImageAsset
       image = image.getContent()
+
     @image = image
+    @width = image.width
+    @height = image.height
 
   draw: (ctx, x, y) ->
     ctx.drawImage(@image, x, y)
