@@ -189,3 +189,10 @@ module.exports =
 
   newQuad: ->
     new Quad(arguments...)
+
+  # export classes
+
+  Canvas: Canvas
+  Drawable: Drawable
+  Image: Image
+  Quad: Quad
