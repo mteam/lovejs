@@ -13,10 +13,12 @@ love.eventify = require './events'
 love.run = ->
   love.load?()
   createHandlers()
-  love.timer.step()
+  love.timer.start()
 
-love.step = ->
+love.tick = ->
   love.update? love.timer.getDelta()
+
+love.tock = ->
   love.graphics.clear()
   love.graphics.push()
   love.draw?()
@@ -33,6 +35,7 @@ createHandlers = ->
     if love.mousepressed? then love.mouse.on('pressed', love.mousepressed.bind(love))
     if love.mousereleased? then love.mouse.on('released', love.mousereleased.bind(love))
 
-  love.timer.on('step', love.step)
+  love.timer.on('tick', love.tick)
+  love.timer.on('tock', love.tock)
 
 
