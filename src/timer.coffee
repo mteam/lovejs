@@ -4,7 +4,7 @@ eventify = require './events'
 eventify(timer)
 
 getMicroTime = -> 
-  Date.now() / 1000
+  Date.now()
 
 dt = null
 last = null
@@ -30,7 +30,7 @@ timer.step = ->
 # update
 timer.tick = ->
   now = getMicroTime()
-  dt = now - last
+  dt = (now - last) / 1000
   last = now
 
   timer.trigger('tick')
