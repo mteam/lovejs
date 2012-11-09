@@ -24,8 +24,11 @@ module.exports = (obj) ->
 
   obj.trigger ?= (event, args...) ->
     return unless events[event]
-    for callback in events[event]
-      callback(args...)
+
+    listeners = events[event]
+    for i in [listeners.length-1..0] by -1
+      listeners[i](args...)
+
     obj
 
   obj.propagate ?= (event, args...) ->
