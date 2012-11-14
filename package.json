@@ -2,4 +2,7 @@
   "name": "love.js",
   "version": "0.0.0",
   "description": "A library for 2D browser games development.",
+  "devDependencies": {
+  	"sham": "0.0.x"
+  }
 }
