@@ -35,6 +35,24 @@ describe('love.graphics', function () {
       canvas.check();
     });
 
+    it('should not accept invalid parameters', function () {
+      var canvas = sham.create();
+      canvas.method('fillRect').called();
+      love.graphics.setCanvas(canvas);
+
+      (function () {
+        love.graphics.rectangle('foo', 10, 20, 300, 400);
+      }).should.throw(/invalid mode/);
+
+      (function () {
+        love.graphics.rectangle('fill', 10 / 0, 20, 300, 400);
+      }).should.throw(/invalid position/);
+
+      (function () {
+        love.graphics.rectangle('fill', 10, 20, 300 / 0, 400);
+      }).should.throw(/invalid dimensions/);
+    });
+
   });
 
 });
