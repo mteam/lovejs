@@ -55,4 +55,20 @@ describe('love.graphics', function () {
 
   });
 
+  describe('clear', function () {
+
+    it('should clear canvas', function () {
+      var canvas = sham.create();
+      canvas.method('getWidth').return(100);
+      canvas.method('getHeight').return(200);
+      canvas.method('clearRect').args(0, 0, 100, 200).called();
+
+      love.graphics.setCanvas(canvas);
+      love.graphics.clear();
+
+      canvas.check();
+    });
+
+  });
+
 });
