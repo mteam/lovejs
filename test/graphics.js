@@ -8,7 +8,7 @@ describe('love.graphics', function () {
     it('should change canvas', function () {
       var canvas = {};
       love.graphics.setCanvas(canvas);
-      assert.equal(love.graphics.getCanvas(), canvas);
+      love.graphics.getCanvas().should.equal(canvas);
     });
 
   });
