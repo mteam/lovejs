@@ -1,0 +1,9 @@
+{
+	"boss": false,
+	"eqnull": true,
+	"unused": true,
+	"undef": true,
+	"strict": false,
+	"node": true,
+	"browser": true
+}

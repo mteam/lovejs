@@ -1,0 +1,13 @@
+{
+	"unused": true,
+	"undef": true,
+	"strict": false,
+	"node": true,
+	
+	"globals": {
+		"describe": false,
+		"before": false,
+		"after": false,
+		"it": false
+	}
+}
