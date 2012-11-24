@@ -1,4 +1,4 @@
-var love = require('../');
+var love = {graphics: require('../lib/graphics')};
 var sham = require('sham');
 
 describe('love.graphics', function () {
