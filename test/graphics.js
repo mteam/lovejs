@@ -37,7 +37,7 @@ describe('love.graphics', function () {
 
     it('should not accept invalid parameters', function () {
       var canvas = sham.create();
-      canvas.method('fillRect').called();
+      canvas.method('fillRect').called(0);
       love.graphics.setCanvas(canvas);
 
       (function () {
@@ -51,6 +51,8 @@ describe('love.graphics', function () {
       (function () {
         love.graphics.rectangle('fill', 10, 20, 300 / 0, 400);
       }).should.throw(/invalid dimensions/);
+
+      canvas.check();
     });
 
   });
