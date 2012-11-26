@@ -6,6 +6,6 @@
   "devDependencies": {
     "sham": "0.0.x",
     "mocha": "~1.7.0",
-    "should": "~1.2.1"
+    "expect.js": "~0.2.0"
   }
 }

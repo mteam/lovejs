@@ -1,5 +1,6 @@
-var love = {graphics: require('../lib/graphics')};
-var sham = require('sham');
+var expect = require('expect.js'),
+    sham = require('sham'),
+    love = {graphics: require('../lib/graphics')};
 
 describe('love.graphics', function () {
 
@@ -8,7 +9,7 @@ describe('love.graphics', function () {
     it('should change canvas', function () {
       var canvas = {};
       love.graphics.setCanvas(canvas);
-      love.graphics.getCanvas().should.equal(canvas);
+      expect(love.graphics.getCanvas()).to.equal(canvas);
     });
 
   });
@@ -40,17 +41,17 @@ describe('love.graphics', function () {
       canvas.method('fillRect').called(0);
       love.graphics.setCanvas(canvas);
 
-      (function () {
+      expect(function () {
         love.graphics.rectangle('foo', 10, 20, 300, 400);
-      }).should.throw(/invalid mode/);
+      }).to.throwError(/invalid mode/);
 
-      (function () {
+      expect(function () {
         love.graphics.rectangle('fill', 10 / 0, 20, 300, 400);
-      }).should.throw(/invalid position/);
+      }).to.throwError(/invalid position/);
 
-      (function () {
+      expect(function () {
         love.graphics.rectangle('fill', 10, 20, 300 / 0, 400);
-      }).should.throw(/invalid dimensions/);
+      }).to.throwError(/invalid dimensions/);
 
       canvas.check();
     });
