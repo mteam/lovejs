@@ -1,6 +1,6 @@
 var expect = require('expect.js'),
     sham = require('sham'),
-    love = {graphics: require('../lib/graphics')};
+    love = {graphics: require('../../lib/graphics')};
 
 describe('love.graphics', function () {
 

@@ -1,5 +1,5 @@
 var expect = require('expect.js');
-    Object_create = require('../lib/shims/object_create');
+    Object_create = require('../../lib/shims/object_create');
 
 describe('love.shims', function() {
   describe('Object.create', function() {
