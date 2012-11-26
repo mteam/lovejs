@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>LOVE.js tests</title>
+
+    <link rel="stylesheet" href="mocha.css">
+  </head>
+  <body>
+    <div id="mocha"></div>
+
+    <script type="text/javascript" src="mocha.js"></script>
+    <script type="text/javascript">
+      mocha.setup('bdd');
+    </script>
+
+    <script type="text/javascript" src="love.js"></script>
+    <script type="text/javascript">
+      require('love/test');
+      mocha.run();
+    </script>
+  </body>
+</html>
