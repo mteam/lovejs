@@ -11,7 +11,7 @@
 
     <script type="text/javascript" src="mocha.js"></script>
     <script type="text/javascript">
-      mocha.setup('bdd');
+      mocha.setup({ ui: 'bdd', ignoreLeaks: true });
     </script>
 
     <script type="text/javascript" src="love.js"></script>
