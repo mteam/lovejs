@@ -57,7 +57,7 @@ describe('love.assets', function() {
 
       love.assets.load(function() {
         expect(asset.isLoaded()).to.be(true);
-        expect(asset.getContent()).to.be.an(Image);
+        expect(asset.getContent()).to.have.property('tagName', 'IMG');
 
         done();
       });
@@ -70,7 +70,7 @@ describe('love.assets', function() {
       love.assets.load(function() {
         assets.forEach(function(asset) {
           expect(asset.isLoaded()).to.be(true);
-          expect(asset.getContent()).to.be.an(Image);
+          expect(asset.getContent()).to.have.property('tagName', 'IMG');
         });
 
         done();
@@ -82,7 +82,7 @@ describe('love.assets', function() {
 
       love.assets.load(function() {
         expect(asset.isLoaded()).to.be(true);
-        expect(asset.getContent()).to.be.an(Audio);
+        expect(asset.getContent()).to.have.property('tagName', 'AUDIO');
         
         done();
       });
