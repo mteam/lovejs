@@ -27,18 +27,6 @@ describe('love.assets', function() {
       expect(asset1).to.be(asset2).and.be.ok();
     });
 
-    it('should return image asset for image urls', function() {
-      [kitten, mt, mallows].forEach(function(url) {
-        var asset = love.assets.get(url);
-        expect(asset).to.be.an(love.assets.Image);
-      });
-    });
-
-    it('should return audio asset for audio url', function() {
-      var asset = love.assets.get(ach, '.mp3', '.ogg');
-      expect(asset).to.be.an(love.assets.Audio);
-    });
-
     it('should throw when called with invalid url', function() {
       var noExt = 'files/foo',
           invalidExt = 'files/foo.bar';
@@ -68,7 +56,9 @@ describe('love.assets', function() {
       var asset = love.assets.get(kitten);
 
       love.assets.load(function() {
-        expect(asset.loaded).to.be(true);
+        expect(asset.isLoaded()).to.be(true);
+        expect(asset.getContent()).to.be.an(Image);
+
         done();
       });
     });
@@ -78,10 +68,11 @@ describe('love.assets', function() {
         .map(function(url) { return love.assets.get(url); });
 
       love.assets.load(function() {
-        var loaded = assets
-          .every(function(a) { return a.loaded; });
+        assets.forEach(function(asset) {
+          expect(asset.isLoaded()).to.be(true);
+          expect(asset.getContent()).to.be.an(Image);
+        });
 
-        expect(loaded).to.be(true);
         done();
       });
     });
@@ -90,7 +81,9 @@ describe('love.assets', function() {
       var asset = love.assets.get(ach, '.mp3', '.ogg');
 
       love.assets.load(function() {
-        expect(asset.loaded).to.be(true);
+        expect(asset.isLoaded()).to.be(true);
+        expect(asset.getContent()).to.be.an(Audio);
+        
         done();
       });
     });
