@@ -17,7 +17,7 @@ describe('love.assets', function() {
       var asset1 = love.assets.get(kitten),
           asset2 = love.assets.get(kitten);
 
-      expect(asset1).to.be(asset2);
+      expect(asset1).to.be(asset2).and.be.ok();
     });
 
     it('should return image asset for image urls', function() {
