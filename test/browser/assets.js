@@ -13,9 +13,16 @@ describe('love.assets', function() {
 
   describe('#get', function() {
 
-    it('should return only one instance for url', function() {
+    it('should return only one instance for image url', function() {
       var asset1 = love.assets.get(kitten),
           asset2 = love.assets.get(kitten);
+
+      expect(asset1).to.be(asset2).and.be.ok();
+    });
+
+    it('should return only one instance for audio url', function() {
+      var asset1 = love.assets.get(ach, '.mp3', '.ogg'),
+          asset2 = love.assets.get(ach, '.ogg', '.mp3');
 
       expect(asset1).to.be(asset2).and.be.ok();
     });
