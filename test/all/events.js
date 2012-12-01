@@ -21,69 +21,69 @@ describe('love.events', function() {
 
   describe('#on', function() {
     it('should add listeners', function() {
-      function handler() {}
+      function listener() {}
 
-      this.obj.on('foo', handler);
-      expect(this.obj._events.foo).to.be(handler);
+      this.obj.on('foo', listener);
+      expect(this.obj._events.foo).to.be(listener);
 
-      this.obj.on('foo', handler);
-      expect(this.obj._events.foo).to.eql([handler, handler]);      
+      this.obj.on('foo', listener);
+      expect(this.obj._events.foo).to.eql([listener, listener]);      
     });
   });
 
   describe('#once', function() {
     it('should trigger only once', function() {
-      var handler = spy();
+      var listener = spy();
 
-      this.obj.once('foo', handler);
+      this.obj.once('foo', listener);
 
       this.obj.trigger('foo');
       this.obj.trigger('foo');
       this.obj.trigger('foo');
 
-      expect(handler.called).to.be(1);
+      expect(listener.called).to.be(1);
     });
   });
 
   describe('#trigger', function() {
-    it('should call one handler with 1 argument', function() {
-      var handler = spy();
+    it('should call one listener with 1 argument', function() {
+      var listener = spy();
 
-      this.obj.on('event', handler);
+      this.obj.on('event', listener);
       this.obj.trigger('event', 'foo');
 
-      expect(handler.called).to.be(1);
-      expect(handler.args).to.eql(['foo']);
+      expect(listener.called).to.be(1);
+      expect(listener.args).to.eql(['foo']);
     });
 
-    it('should call one handler with 3 arguments', function() {
-      var handler = spy();
+    it('should call one listener with 3 arguments', function() {
+      var listener = spy();
 
-      this.obj.on('event', handler);
+      this.obj.on('event', listener);
       this.obj.trigger('event', 'foo', 'bar', 'baz');
 
-      expect(handler.called).to.be(1);
-      expect(handler.args).to.eql(['foo', 'bar', 'baz']);
+      expect(listener.called).to.be(1);
+      expect(listener.args).to.eql(['foo', 'bar', 'baz']);
     });
 
-    it('should call more handlers', function() {
+    it('should call more listeners', function() {
       var start = Date.now();
 
-      var handlers = [1, 2, 3, 4, 5]
+      var listeners = [1, 2, 3, 4, 5]
         .map(function() { return spy(); });
 
       var obj = this.obj;
 
-      handlers.forEach(function(handler) {
-        obj.on('event', handler);
+      listeners.forEach(function(listener) {
+        obj.on('event', listener);
       });
 
       obj.trigger('event', 'foo');
 
-      expect(handlers.every(function(handler) {
-        return handler.called === 1 &&
-          handler.args.length === 1 &&
-          handler.args[0] === 'foo';
+      expect(listeners.every(function(listener) {
+        return listener.called === 1 &&
+          listener.args.length === 1 &&
+          listener.args[0] === 'foo';
       })).to.be(true);
     });
   });
