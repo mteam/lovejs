@@ -4,7 +4,7 @@
   "description": "A library for 2D browser games development.",
   "main": "./lib/index",
   "devDependencies": {
-    "sham": "0.0.x",
+    "sham": "~0.1.0",
     "mocha": "~1.7.0",
     "expect.js": "~0.2.0"
   }

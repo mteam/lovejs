@@ -1,4 +1,5 @@
 var expect = require('expect.js'),
+    sham = require('sham'),
     love = { events: require('../../lib/events') };
 
 describe('love.events', function() {
@@ -6,18 +7,6 @@ describe('love.events', function() {
     this.obj = {};
     love.events.extend(this.obj);
   });
-
-  function spy() {
-    function fn() {
-      fn.called++;
-      fn.args = Array.prototype.slice.call(arguments);
-    }
-
-    fn.called = 0;
-    fn.args = null;
-
-    return fn;
-  }
 
   describe('#on', function() {
     it('should add listeners', function() {
@@ -33,7 +22,7 @@ describe('love.events', function() {
 
   describe('#once', function() {
     it('should trigger only once', function() {
-      var listener = spy();
+      var listener = sham.spy().called(1);
 
       this.obj.once('foo', listener);
 
@@ -41,36 +30,32 @@ describe('love.events', function() {
       this.obj.trigger('foo');
       this.obj.trigger('foo');
 
-      expect(listener.called).to.be(1);
+      listener.check();
     });
   });
 
   describe('#trigger', function() {
     it('should call one listener with 1 argument', function() {
-      var listener = spy();
+      var listener = sham.spy().called(1).args('foo');
 
       this.obj.on('event', listener);
       this.obj.trigger('event', 'foo');
 
-      expect(listener.called).to.be(1);
-      expect(listener.args).to.eql(['foo']);
+      listener.check();
     });
 
     it('should call one listener with 3 arguments', function() {
-      var listener = spy();
+      var listener = sham.spy().called(1).args('foo', 'bar', 'baz');
 
       this.obj.on('event', listener);
       this.obj.trigger('event', 'foo', 'bar', 'baz');
 
-      expect(listener.called).to.be(1);
-      expect(listener.args).to.eql(['foo', 'bar', 'baz']);
+      listener.check();
     });
 
     it('should call more listeners', function() {
-      var start = Date.now();
-
       var listeners = [1, 2, 3, 4, 5]
-        .map(function() { return spy(); });
+        .map(function() { return sham.spy().called().args('foo'); });
 
       var obj = this.obj;
 
@@ -80,11 +65,9 @@ describe('love.events', function() {
 
       obj.trigger('event', 'foo');
 
-      expect(listeners.every(function(listener) {
-        return listener.called === 1 &&
-          listener.args.length === 1 &&
-          listener.args[0] === 'foo';
-      })).to.be(true);
+      listeners.forEach(function(listener) {
+        listener.check();
+      });
     });
   });
 });

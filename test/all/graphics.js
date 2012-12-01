@@ -17,7 +17,7 @@ describe('love.graphics', function () {
   describe('rectangle', function () {
 
     it('should draw a filled rectangle', function () {
-      var canvas = sham.create();
+      var canvas = sham.mock();
       canvas.method('fillRect').args(10, 20, 300, 400).called();
 
       love.graphics.setCanvas(canvas);
@@ -27,7 +27,7 @@ describe('love.graphics', function () {
     });
 
     it('should draw an outlined rectangle', function () {
-      var canvas = sham.create();
+      var canvas = sham.mock();
       canvas.method('strokeRect').args(10, 20, 300, 400).called();
 
       love.graphics.setCanvas(canvas);
@@ -37,7 +37,7 @@ describe('love.graphics', function () {
     });
 
     it('should not accept invalid parameters', function () {
-      var canvas = sham.create();
+      var canvas = sham.mock();
       canvas.method('fillRect').called(0);
       love.graphics.setCanvas(canvas);
 
@@ -61,7 +61,7 @@ describe('love.graphics', function () {
   describe('clear', function () {
 
     it('should clear canvas', function () {
-      var canvas = sham.create();
+      var canvas = sham.mock();
       canvas.method('getWidth').return(100);
       canvas.method('getHeight').return(200);
       canvas.method('clearRect').args(0, 0, 100, 200).called();
