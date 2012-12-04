@@ -3,10 +3,7 @@ var expect = require('expect.js'),
     love = { keyboard: require('../../lib/keyboard') };
 
 describe('love.keyboard', function() {
-  afterEach(function() {
-    love.keyboard._events = {};
-    love.keyboard.pressed = {};
-  });
+  beforeEach(love.keyboard.init);
 
   var events = {
     p: { keyCode: 80 },
