@@ -3,13 +3,7 @@ var expect = require('expect.js'),
     love = { mouse: require('../../lib/mouse') };
 
 describe('love.mouse', function() {
-  function reset() {
-    love.mouse._reset();
-    love.mouse._events = {};
-  }
-
-  before(reset);
-  afterEach(reset);
+  beforeEach(love.mouse.init);
 
   var events = {
     left: { button: 1 },
