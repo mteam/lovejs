@@ -6,6 +6,8 @@
   "devDependencies": {
     "sham": "~0.1.0",
     "mocha": "~1.7.0",
-    "expect.js": "~0.2.0"
+    "expect.js": "~0.2.0",
+    "mallow": "~2.0.0",
+    "express": "~3.0.3"
   }
 }
