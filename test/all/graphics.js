@@ -1,72 +1,67 @@
 var expect = require('expect.js'),
-    sham = require('sham'),
-    love = {graphics: require('../../lib/graphics')};
+    love = {graphics: require('../../lib/graphics')},
+    newCanvas = require('../mocks/canvas');
 
-describe('love.graphics', function () {
+describe('love.graphics', function() {
 
-  describe('setCanvas', function () {
+  describe('#rectangle', function() {
 
-    it('should change canvas', function () {
-      var canvas = {};
-      love.graphics.setCanvas(canvas);
-      expect(love.graphics.getCanvas()).to.equal(canvas);
-    });
+    it('should draw a filled rectangle', function() {
+      var canvas = newCanvas();
 
-  });
+      canvas.context.fillRect.args(10, 20, 300, 400).called();
 
-  describe('rectangle', function () {
-
-    it('should draw a filled rectangle', function () {
-      var canvas = sham.mock();
-      canvas.method('fillRect').args(10, 20, 300, 400).called();
-
-      love.graphics.setCanvas(canvas);
+      love.graphics.use(canvas);
       love.graphics.rectangle('fill', 10, 20, 300, 400);
 
-      canvas.check();
+      canvas.context.check();
     });
 
-    it('should draw an outlined rectangle', function () {
-      var canvas = sham.mock();
-      canvas.method('strokeRect').args(10, 20, 300, 400).called();
+    it('should draw an outlined rectangle', function() {
+      var canvas = newCanvas();
 
-      love.graphics.setCanvas(canvas);
+      canvas.context.strokeRect.args(10, 20, 300, 400).called();
+
+      love.graphics.use(canvas);
       love.graphics.rectangle('line', 10, 20, 300, 400);
 
-      canvas.check();
+      canvas.context.check();
     });
 
-    it('should not accept invalid parameters', function () {
-      var canvas = sham.mock();
-      canvas.method('fillRect').called(0);
-      love.graphics.setCanvas(canvas);
+    it('should not accept invalid parameters', function() {
+      var canvas = newCanvas();
 
-      expect(function () {
+      canvas.context.fillRect.called(0);
+
+      love.graphics.use(canvas);
+
+      expect(function() {
         love.graphics.rectangle('foo', 10, 20, 300, 400);
       }).to.throwError(/invalid mode/);
 
-      expect(function () {
+      expect(function() {
         love.graphics.rectangle('fill', 10 / 0, 20, 300, 400);
       }).to.throwError(/invalid position/);
 
-      expect(function () {
+      expect(function() {
         love.graphics.rectangle('fill', 10, 20, 300 / 0, 400);
       }).to.throwError(/invalid dimensions/);
 
-      canvas.check();
+      canvas.context.check();
     });
 
   });
 
-  describe('clear', function () {
+  describe('#clear', function() {
 
-    it('should clear canvas', function () {
-      var canvas = sham.mock();
-      canvas.method('getWidth').return(100);
-      canvas.method('getHeight').return(200);
-      canvas.method('clearRect').args(0, 0, 100, 200).called();
+    it('should clear canvas', function() {
+      var canvas = newCanvas();
 
-      love.graphics.setCanvas(canvas);
+      canvas.getWidth.return(100);
+      canvas.getHeight.return(200);
+      canvas.context.clearRect.args(0, 0, 100, 200).called();
+
+      love.graphics.use(canvas);
       love.graphics.clear();
 
       canvas.check();
