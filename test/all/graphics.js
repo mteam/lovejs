@@ -1,4 +1,5 @@
 var expect = require('expect.js'),
+    sham = require('sham'),
     love = {graphics: require('../../lib/graphics')},
     newCanvas = require('../mocks/canvas'),
     newDrawable = require('../mocks/drawable');
@@ -97,6 +98,48 @@ describe('love.graphics', function() {
       
       dr.check();
     });
+  });
+
+  describe('Image', function() {
+
+    it('should create instance from asset', function() {
+      var asset = sham.mock(),
+          source = {};
+
+      asset.method('getContent').return(source);
+
+      var image = love.graphics.newImage(asset);
+
+      expect(image.source).to.be(source);
+    });
+
+    it('should draw', function() {
+      var source = {},
+          image = love.graphics.newImage(source),
+          canvas = newCanvas();
+
+      canvas.context.drawImage.args(source, 10, 20).called();
+
+      love.graphics.use(canvas);
+      love.graphics.draw(image, 10, 20);
+
+      canvas.context.check();
+    });
+
+    it('should draw rect', function() {
+      var source = {},
+          image = love.graphics.newImage(source),
+          rect = { left: 10, top: 20, width: 30, height: 40 },
+          canvas = newCanvas();
+
+      canvas.context.drawImage.args(source, 10, 20, 30, 40, 50, 60, 30, 40).called();
+
+      love.graphics.use(canvas);
+      love.graphics.drawRect(image, rect, 50, 60);
+
+      canvas.context.check();
+    });
+
   });
 
 });

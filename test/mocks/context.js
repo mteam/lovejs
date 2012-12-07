@@ -1,7 +1,8 @@
 var sham = require('sham');
 
 var methods = [
-  'fillRect', 'strokeRect', 'clearRect'
+  'fillRect', 'strokeRect', 'clearRect',
+  'drawImage'
 ];
 
 module.exports = function() {
