@@ -1,11 +1,11 @@
 var mallow = require('mallow'),
     express = require('express');
 
-var base = __dirname + '/../../';
+var base = __dirname + '/../';
 
 var love = mallow.package('love')
   .directory(base)
-  .include('{lib,test/{all,browser}}/**/*.js')
+  .include('{lib,test/{all,browser,mocks}}/**/*.js')
   .main('lib/index');
 
 var sham = mallow.package('sham')
