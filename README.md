@@ -1,3 +1,6 @@
+**Note: this is an outdated version and it is no longer being developed.** But it is usable.
+The new version will be released soon.
+
 # LÖVE.js
 
 LÖVE.js is a port of [LÖVE](http://love2d.org/), an amazing game engine written in Lua. The API is identical, since JavaScript and Lua are very similar. The canvas is used for rendering.
