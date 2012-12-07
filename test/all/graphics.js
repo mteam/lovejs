@@ -1,6 +1,7 @@
 var expect = require('expect.js'),
     love = {graphics: require('../../lib/graphics')},
-    newCanvas = require('../mocks/canvas');
+    newCanvas = require('../mocks/canvas'),
+    newDrawable = require('../mocks/drawable');
 
 describe('love.graphics', function() {
 
@@ -67,6 +68,35 @@ describe('love.graphics', function() {
       canvas.check();
     });
 
+  });
+  
+  describe('#draw', function() {
+    it('should draw object', function() {
+      var canvas = newCanvas(),
+          dr = newDrawable();
+          
+      love.graphics.use(canvas);
+      
+      dr.draw.args(canvas.context, 10, 20).called();
+      love.graphics.draw(dr, 10, 20);
+      
+      dr.check();
+    });
+  });
+  
+  describe('#drawRect', function() {
+    it('should draw object', function() {
+      var canvas = newCanvas(),
+          dr = newDrawable(),
+          rect = {};
+          
+      love.graphics.use(canvas);
+      
+      dr.drawRect.args(canvas.context, rect, 10, 20).called();
+      love.graphics.drawRect(dr, rect, 10, 20);
+      
+      dr.check();
+    });
   });
 
 });
