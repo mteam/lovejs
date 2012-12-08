@@ -6,6 +6,39 @@ var expect = require('expect.js'),
 
 describe('love.graphics', function() {
 
+  describe('#setScreen', function() {
+
+    it('should set screen and canvas', function() {
+      var canvas = {};
+
+      love.graphics.setScreen(canvas);
+      expect(love.graphics.getCanvas()).to.be(canvas);
+    });
+
+  });
+
+  describe('#setCanvas', function() {
+
+    it('should set canvas', function() {
+      var canvas = {};
+
+      love.graphics.setCanvas(canvas);
+      expect(love.graphics.getCanvas()).to.be(canvas);
+    });
+
+    it('should reset to screen when called without arguments', function() {
+      var screen = {},
+          canvas = {};
+
+      love.graphics.setScreen(screen);
+      love.graphics.setCanvas(canvas);
+      love.graphics.setCanvas();
+
+      expect(love.graphics.getCanvas()).to.be(screen);
+    });
+
+  });
+
   describe('#rectangle', function() {
 
     it('should draw a filled rectangle', function() {
