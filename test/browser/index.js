@@ -1,1 +1,2 @@
 require('./assets');
+require('./helpers');

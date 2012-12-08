@@ -14,4 +14,14 @@ describe('love.helpers', function() {
     expect(isn(Infinity)).to.be(false);
     expect(isn('foo')).to.be(false);
   });
+
+  it('is.string', function() {
+    var iss = love.helpers.is.string;
+
+    expect(iss('foo')).to.be(true);
+
+    expect(iss(123)).to.be(false);
+    expect(iss(null)).to.be(false);
+    expect(iss(undefined)).to.be(false);
+  });
 });
