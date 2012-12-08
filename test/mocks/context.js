@@ -2,6 +2,7 @@ var sham = require('sham');
 
 var methods = [
   'fillRect', 'strokeRect', 'clearRect',
+  'moveTo', 'lineTo', 'stroke',
   'drawImage'
 ];
 

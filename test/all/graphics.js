@@ -70,6 +70,25 @@ describe('love.graphics', function() {
     });
 
   });
+
+  describe('#line', function() {
+    it('should draw a line', function() {
+      var canvas = newCanvas();
+
+      canvas.context.moveTo.args(10, 20);
+      canvas.context.lineTo
+        .args(20, 30)
+        .args(30, 40)
+        .args(40, 50)
+        .called(3);
+      canvas.context.stroke.called();
+
+      love.graphics.use(canvas);
+      love.graphics.line(10, 20, 20, 30, 30, 40, 40, 50);
+
+      canvas.context.check();
+    });
+  });
   
   describe('#draw', function() {
     it('should draw object', function() {
