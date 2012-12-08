@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+    mallow = require('mallow');
+
+var love = mallow.package('love')
+  .directory(__dirname + '/../lib/')
+  .include('**/*.js')
+  .main('index');
+
+mallow.compile(love).then(function(output) {
+  console.log('writing to ../out/love.js');
+  fs.writeFile(__dirname + '/../out/love.js', output);
+});
