@@ -1,5 +1,6 @@
 require('./events');
 require('./graphics');
+require('./helpers');
 require('./keyboard');
 require('./mouse');
 require('./rect');
