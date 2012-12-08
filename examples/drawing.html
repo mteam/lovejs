@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Drawing example</title>
+  </head>
+  
+  <body>
+    <canvas id="drawing" width="400" height="300"></canvas>
+
+    <script src="../out/love.js"></script>
+    <script>
+
+      var love = require('love');
+
+      var prev = { x: null, y: null },
+          canvas;
+
+      love.load = function() {
+        var screen = love.graphics.newCanvas('#drawing');
+        love.graphics.setScreen(screen);
+
+        canvas = love.graphics.newCanvas();
+
+        love.mouse.on('moved', moved);
+      };
+
+      function moved() {
+        var pos = love.mouse.getPosition();
+
+        if (love.mouse.isDown('left')) {
+          canvas.use(function() {
+            love.graphics.line(prev.x, prev.y, pos.x, pos.y);
+          });
+        }
+
+        prev.x = pos.x;
+        prev.y = pos.y;
+      }
+
+      love.draw = function() {
+        love.graphics.draw(canvas, 0, 0);
+      };
+
+    </script>
+  </body>
+</html>
