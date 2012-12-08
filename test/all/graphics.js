@@ -13,7 +13,7 @@ describe('love.graphics', function() {
 
       canvas.context.fillRect.args(10, 20, 300, 400).called();
 
-      love.graphics.use(canvas);
+      love.graphics.setCanvas(canvas);
       love.graphics.rectangle('fill', 10, 20, 300, 400);
 
       canvas.context.check();
@@ -24,8 +24,8 @@ describe('love.graphics', function() {
 
       canvas.context.strokeRect.args(10, 20, 300, 400).called();
 
-      love.graphics.use(canvas);
-      love.graphics.rectangle('line', 10, 20, 300, 400);
+      love.graphics.setCanvas(canvas);
+      love.graphics.rectangle('stroke', 10, 20, 300, 400);
 
       canvas.context.check();
     });
@@ -35,7 +35,7 @@ describe('love.graphics', function() {
 
       canvas.context.fillRect.called(0);
 
-      love.graphics.use(canvas);
+      love.graphics.setCanvas(canvas);
 
       expect(function() {
         love.graphics.rectangle('foo', 10, 20, 300, 400);
@@ -63,7 +63,7 @@ describe('love.graphics', function() {
       canvas.getHeight.return(200);
       canvas.context.clearRect.args(0, 0, 100, 200).called();
 
-      love.graphics.use(canvas);
+      love.graphics.setCanvas(canvas);
       love.graphics.clear();
 
       canvas.check();
@@ -83,7 +83,7 @@ describe('love.graphics', function() {
         .called(3);
       canvas.context.stroke.called();
 
-      love.graphics.use(canvas);
+      love.graphics.setCanvas(canvas);
       love.graphics.line(10, 20, 20, 30, 30, 40, 40, 50);
 
       canvas.context.check();
@@ -95,7 +95,7 @@ describe('love.graphics', function() {
       var canvas = newCanvas(),
           dr = newDrawable();
           
-      love.graphics.use(canvas);
+      love.graphics.setCanvas(canvas);
       
       dr.draw.args(canvas.context, 10, 20).called();
       love.graphics.draw(dr, 10, 20);
@@ -110,7 +110,7 @@ describe('love.graphics', function() {
           dr = newDrawable(),
           rect = {};
           
-      love.graphics.use(canvas);
+      love.graphics.setCanvas(canvas);
       
       dr.drawRect.args(canvas.context, rect, 10, 20).called();
       love.graphics.drawRect(dr, rect, 10, 20);
@@ -139,7 +139,7 @@ describe('love.graphics', function() {
 
       canvas.context.drawImage.args(source, 10, 20).called();
 
-      love.graphics.use(canvas);
+      love.graphics.setCanvas(canvas);
       love.graphics.draw(image, 10, 20);
 
       canvas.context.check();
@@ -153,7 +153,7 @@ describe('love.graphics', function() {
 
       canvas.context.drawImage.args(source, 10, 20, 30, 40, 50, 60, 30, 40).called();
 
-      love.graphics.use(canvas);
+      love.graphics.setCanvas(canvas);
       love.graphics.drawRect(image, rect, 50, 60);
 
       canvas.context.check();
