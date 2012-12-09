@@ -6,9 +6,9 @@ describe('love.mouse', function() {
   beforeEach(love.mouse.init);
 
   var events = {
-    left: { button: 1 },
-    middle: { button: 2 },
-    right: { button: 3 },
+    left: { button: 0 },
+    middle: { button: 1 },
+    right: { button: 2 },
 
     wheelUp: { wheelDelta: 120 },
     wheelDown: { wheelDelta: -120 },
