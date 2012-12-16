@@ -1,3 +1,4 @@
+require('./collisions');
 require('./events');
 require('./graphics');
 require('./helpers');
