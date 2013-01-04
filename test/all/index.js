@@ -1,3 +1,5 @@
+require('./animation');
+require('./class');
 require('./collisions');
 require('./events');
 require('./graphics');
