@@ -1,5 +1,5 @@
 var expect = require('expect.js'),
-    klass = require('../../lib/class.js');
+    klass = require('../../lib/class');
 
 describe('love.class', function() {
 
@@ -28,39 +28,69 @@ describe('love.class', function() {
 
   it('should do inheritance', function() {
 
-    var Parent = klass({
+    var Foo = klass({
 
-      constructor: function Parent() {
-        this.value = null;
-      },
-
-      set: function(value) {
-        this.value = value;
-      },
-
-      get: function() {
-        return this.value;
-      }
-
-    });
-
-    var Child = klass(Parent, {
-
-      constructor: function Child() {
-        Parent.call(this);
-
-        this.set('ho ho ho');
+      constructor: function Foo() {
+        this.msg = 'ho ho ho';
       },
 
       say: function() {
-        return '"' + this.get() + '"';
+        return '"' + this.msg + '"';
       }
 
     });
 
-    var i = new Child;
+    var Bar = klass(Foo, {
 
-    expect(i.say()).to.be('"ho ho ho"');
+      shout: function() {
+        return this.say().toUpperCase();
+      }
+
+    });
+
+    var a = new Bar;
+
+    expect(a.shout()).to.be('"HO HO HO"');
+
+  });
+
+  it('should work without constructor', function() {
+
+    var Foo = klass({
+
+      double: function(n) {
+        return n * 2;
+      }
+
+    });
+
+    var a = new Foo;
+
+    expect(a.double(2)).to.be(4);
+
+  });
+
+  it('should call parent constructor', function() {
+
+    var Foo = klass({
+
+      constructor: function(name) {
+        this.name = name;
+      }
+
+    });
+
+    var Bar = klass(Foo, {
+
+      say: function(msg) {
+        return this.name + ': ' + msg;
+      }
+
+    });
+
+    var a = new Bar('john');
+
+    expect(a.say('hi')).to.be('john: hi');
 
   });
 
